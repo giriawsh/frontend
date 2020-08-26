@@ -20,6 +20,11 @@ export const state = () => ({
     }
   ]
 });
+export const getters = {
+  links: (state, getters) => {
+    return state.items;
+  }
+};
 export const mutations = {
   setDrawer: (state, payload) => (state.drawer = payload),
   toggleDrawer: state => (state.drawer = !state.drawer),
