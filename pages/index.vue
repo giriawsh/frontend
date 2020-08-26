@@ -1,57 +1,51 @@
 <template>
-  <div class="container">
-    <div>
-      <logo/>
-      <h1 class="title">
-        frontend
-      </h1>
-      <h2 class="subtitle">
-        My slick Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-      <v-btn>{{ title }}</v-btn>
-    </div>
-  </div>
+  <v-app>
+    <core-app-bar/>
+
+    <core-drawer/>
+
+    <core-view/>
+
+    <core-footer/>
+  </v-app>
+
+  <!--      <v-btn>{{ title }}</v-btn>-->
+
 </template>
 
 <script>
   import Logo from '~/components/Logo.vue'
   import axios from '~/plugins/axios'
+  import CoreAppBar from '~/components/core/AppBar.vue'
+  import CoreDrawer from '~/components/core/Drawer.vue'
+  import CoreFooter from '~/components/core/Footer.vue'
+  import CoreView from '~/components/core/View.vue'
 
   export default {
-    data() {
-      return {
-        title: '',
-      }
-    },
-    mounted() {
-      this.loadTitle();
-    },
     components: {
-      Logo
-    },
-    methods: {
-      async loadTitle() {
-        const data = await axios.get('/');
-        console.log(data);
-        this.title = data["_links"]["comments"]["templated"];
-      }
+      CoreAppBar,
+      CoreDrawer,
+      CoreFooter,
+      CoreView
     }
+    // data() {
+    //   return {
+    //     title: '',
+    //   }
+    // },
+    // mounted() {
+    //   this.loadTitle();
+    // },
+    // components: {
+    //   Logo
+    // },
+    // methods: {
+    //   async loadTitle() {
+    //     const data = await axios.get('/');
+    //     console.log(data);
+    //     this.title = data["_links"]["comments"]["templated"];
+    //   }
+    // }
   }
 </script>
 
