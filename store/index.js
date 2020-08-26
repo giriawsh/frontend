@@ -8,15 +8,15 @@ export const state = () => ({
     items: [
     {
       text: 'Home',
-      href: '#!',
+      href: '/',
     },
     {
       text: 'About',
-      href: '#about',
+      href: '/about',
     },
     {
       text: 'Profile',
-      href: '#profile'
+      href: '/profile'
     }
   ]
 });

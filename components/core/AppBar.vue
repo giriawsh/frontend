@@ -93,7 +93,7 @@
       {
         e.stopPropagation();
         if(item.to || !item.href) return;
-        this.$router.go(item.href.endsWith('!') ? 0: item.href);
+        this.$router.go(item.href);
       }
     },
   }
