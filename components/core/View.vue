@@ -42,8 +42,7 @@
 <!--          </v-tabs>-->
           <v-tabs
             v-model="tabs"
-            background-color="black darken-4"
-            class="elevation-2"
+            background-color="grey darken-4"
             dark
             style="border-radius: 5px"
           >
