@@ -29,7 +29,12 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    {
+      src: '~plugins/nuxt-quill-plugin.js',
+      ssr: false //仅在客户端渲染
+    },
+    { src: '~plugins/mavon-editor', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -63,5 +68,5 @@ export default {
 module.exports = {
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:80'
-  }
+  },
 };

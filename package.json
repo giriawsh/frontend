@@ -13,7 +13,10 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.1",
     "element-ui": "^2.4.11",
-    "nuxt": "^2.0.0"
+    "mavon-editor": "^2.9.0",
+    "nuxt": "^2.0.0",
+    "vue-quill-editor": "^3.0.6",
+    "zx-markdown-editor": "0.0.2"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.2"

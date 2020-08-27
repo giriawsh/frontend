@@ -7,6 +7,7 @@
       <v-btn
         color="success"
         class="ma-2 white-text"
+        @click="jumpToEditor"
         >
         <v-icon left dark>mdi-plus</v-icon>
         Create Article
@@ -28,6 +29,11 @@
 </template>
 <script>
   export default {
-    name: 'CoreSideBar'
+    name: 'CoreSideBar',
+    methods:{
+      jumpToEditor(){
+        this.$router.push('/editor')
+      }
+    }
   }
 </script>
