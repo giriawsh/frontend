@@ -1,70 +1,49 @@
 <template>
-  <div>
-    <nuxt/>
-  </div>
+  <v-app>
+    <core-app-bar/>
+    <core-drawer/>
+    <v-content>
+      <nuxt/>
+    </v-content>
+    <v-footer
+      class="justify-center"
+      color="#292929"
+      height="100"
+    >
+      <div class="title font-weight-light grey--text text--lighten-1 text-center">
+        &copy; {{ (new Date()).getFullYear() }} — Powered 💜 by BUPT Homework Team
+      </div>
+    </v-footer>
+  </v-app>
 </template>
+
 <script>
-  import CoreAppBar from '~/components/core/AppBar.vue'
-  import CoreDrawer from '~/components/core/Drawer.vue'
-  import CoreFooter from '~/components/core/Footer.vue'
-  import CoreView from '~/components/core/View.vue'
+  import Logo from '~/components/Logo.vue'
+  import axios from '~/plugins/axios'
+  import CoreAppBar from '../components/core/AppBar.vue'
+  import CoreDrawer from '../components/core/Drawer.vue'
+  import CoreFooter from '../components/core/Footer.vue'
+  import CoreView from '../components/core/View.vue'
+  import CoreSideBar from '../components/core/SideBar.vue'
 
   export default {
     components: {
-      CoreView,
-      CoreFooter,
+      CoreAppBar,
       CoreDrawer,
-      CoreAppBar
+      CoreFooter,
+      CoreView,
+      CoreSideBar
     }
   }
-
 </script>
-<style>
-  html {
-    font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-    font-size: 16px;
-    word-spacing: 1px;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    box-sizing: border-box;
+<style scoped>
+  .setting-fab {
+    top: 50% !important;
+    right: 0;
+    border-radius: 0;
   }
 
-  *,
-  *:before,
-  *:after {
-    box-sizing: border-box;
-    margin: 0;
-  }
-
-  .button--green {
-    display: inline-block;
-    border-radius: 4px;
-    border: 1px solid #3b8070;
-    color: #3b8070;
-    text-decoration: none;
-    padding: 10px 30px;
-  }
-
-  .button--green:hover {
-    color: #fff;
-    background-color: #3b8070;
-  }
-
-  .button--grey {
-    display: inline-block;
-    border-radius: 4px;
-    border: 1px solid #35495e;
-    color: #35495e;
-    text-decoration: none;
-    padding: 10px 30px;
-    margin-left: 15px;
-  }
-
-  .button--grey:hover {
-    color: #fff;
-    background-color: #35495e;
+  .page-wrapper {
+    min-height: calc(100vh - 64px - 50px - 81px);
   }
 </style>

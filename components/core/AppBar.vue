@@ -62,7 +62,6 @@
         </v-list>
       </v-menu>
     </v-container>
-
   </v-app-bar>
 </template>
 <script>
