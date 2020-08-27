@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-text>
-      33333
+      求职
       foobar:{{foobar}}
     </v-card-text>
   </v-card>

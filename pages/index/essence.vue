@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-text>
-      22222
+      精华
       foobar:{{foobar}}
     </v-card-text>
   </v-card>

@@ -1,6 +1,5 @@
 <template>
   <v-app-bar
-    app
     flat
   >
     <v-app-bar-nav-icon

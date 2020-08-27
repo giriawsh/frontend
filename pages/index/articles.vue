@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-text>
-      11111
+      全部
       foobar:{{foobar}}
     </v-card-text>
   </v-card>
