@@ -31,7 +31,7 @@
   import CoreSideBar from '~/components/core/SideBar.vue'
 
   export default {
-
+    name: "index",
     components: {
       CoreAppBar,
       CoreDrawer,

@@ -1,12 +1,44 @@
 <template>
-  <div>
-      <mavon-editor :toolbars="markdownOption" v-model="handbook"/>
-  </div>
+  <v-container
+    fluid
+    tag="section"
+  >
+    <v-row justify="center">
+      <v-col
+        cols="12"
+        md="10"
+      >
+        <v-content>
+          <the-breadcrumb layout-class="pl-3 pb-0"/>
+          <v-container fluid>
+            <v-slide-y-transition mode="out-in">
+              <mavon-editor :toolbars="markdownOption" v-model="handbook" style="width: 100%; height: 800px;"/>
+            </v-slide-y-transition>
+          </v-container>
+        </v-content>
+      </v-col>
+    </v-row>
+  </v-container>
+
 </template>
 <script>
+  import TheBreadcrumb from "../components/TheBreadcrumb";
+
   export default {
+    components: {TheBreadcrumb},
     data() {
       return {
+        items: [
+          {
+            text: "主页",
+            disabled: false,
+            href: '/articles'
+          },
+          {
+            text: "发布帖子",
+            disabled: true
+          }
+        ],
         markdownOption: {
           bold: true, // 粗体
           italic: true, // 斜体
@@ -43,6 +75,6 @@
     }
   }
 </script>
-<style scoped>
-
+<style>
+  @import "../assets/public.css";
 </style>
