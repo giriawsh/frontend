@@ -1,8 +1,5 @@
 <template>
-  <v-container
-    fluid
-    tag="section"
-  >
+  <v-container fluid>
     <v-row justify="center">
       <v-col
         cols="12"
@@ -11,9 +8,10 @@
         <the-breadcrumb layout-class="pl-3 pb-0"/>
         <div class="py-3"/>
         <v-content>
+
           <v-card>
             <v-card-title class="grey darken-3" style="color: white;">
-              用户信息
+              注册
             </v-card-title>
             <v-card-text>
               <v-layout row>
@@ -21,7 +19,28 @@
                   <v-subheader>UserName:</v-subheader>
                 </v-flex>
                 <v-flex xs8>
-                 <span>{{user.username}}</span>
+                  <v-text-field
+                    label="请输入用户名"
+                    v-model="username"
+                    :counter="10"
+                    single-line
+                    required
+                  >
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+              <v-layout row>
+                <v-flex xs2>
+                  <v-subheader>PassWord:</v-subheader>
+                </v-flex>
+                <v-flex xs8>
+                  <v-text-field
+                    label="请输入密码"
+                    v-model="password"
+                    single-line
+                    required
+                  >
+                  </v-text-field>
                 </v-flex>
               </v-layout>
               <v-layout row>
@@ -29,19 +48,23 @@
                   <v-subheader>性别：</v-subheader>
                 </v-flex>
                 <v-flex xs8>
-                  <span>
-                    user.sex
-                  </span>
+                  <v-select
+                    v-model="sex"
+                    :items="sexes"
+                    :rules="[v=>!!v || '请选择性别']"
+                    required
+                  >
+                  </v-select>
                 </v-flex>
               </v-layout>
               <v-flex>
                 <v-btn
-                  @click="jumpBack"
+                  @click="register"
                   large
                   color="primary"
                   width="100px"
                 >
-                  返回
+                  注册
                 </v-btn>
               </v-flex>
             </v-card-text>
@@ -59,21 +82,22 @@
     },
     data() {
       return {
-        user: {
-          username: "admin",
-          password: "123",
-          sex: "女",
-        },
-
+        username: "",
+        password: "",
+        sex: "",
+        sexes: [
+          '男',
+          '女'
+        ]
       }
     },
     methods: {
-      jumpBack() {
-        this.$router.push('/')
+      register() {
+
       }
     }
   }
 </script>
 <style>
-  @import "../assets/public.css";
+
 </style>

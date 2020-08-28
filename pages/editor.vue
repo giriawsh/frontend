@@ -8,15 +8,70 @@
         cols="12"
         md="10"
       >
+        <the-breadcrumb layout-class="pl-3 pb-0"/>
         <v-content>
-          <the-breadcrumb layout-class="pl-3 pb-0"/>
+          <v-form v-model="isValid">
+
+            <v-layout row>
+              <v-flex>
+                <v-subheader>标题:</v-subheader>
+              </v-flex>
+              <v-flex>
+                <v-text-field
+                  label="请输入标题"
+                  v-model="title"
+                  :counter="25"
+                  :rules="titleRules"
+                  single-line
+                  required
+                >
+                </v-text-field>
+              </v-flex>
+              <v-spacer></v-spacer>
+              <v-flex>
+                <v-subheader>板块选择：</v-subheader>
+              </v-flex>
+              <v-flex>
+                <v-select
+                  v-model="type"
+                  :items="types"
+                  :rules="[v=>!!v || '请选择板块']"
+                  required
+                  style="z-index: 1500"
+                >
+                </v-select>
+              </v-flex>
+            </v-layout>
+          </v-form>
           <v-container fluid>
             <v-slide-y-transition mode="out-in">
               <mavon-editor :toolbars="markdownOption" v-model="handbook" style="width: 100%; height: 800px;"/>
             </v-slide-y-transition>
           </v-container>
+          <v-flex>
+            <v-btn
+              @click="register"
+              large
+              color="blue-grey"
+              width="100px"
+            >
+              保存
+            </v-btn>
+            <v-btn
+              :loading="postLoading"
+              @click="post"
+              large
+              color="primary"
+              width="100px"
+              :disabled="!isValid"
+            >
+              发表
+            </v-btn>
+          </v-flex>
         </v-content>
       </v-col>
+      <v-dialog v-model="alertDialog" max-width="290">
+      </v-dialog>
     </v-row>
   </v-container>
 
@@ -28,6 +83,16 @@
     components: {TheBreadcrumb},
     data() {
       return {
+        title: "",
+        type: '',
+        alertDialog: false,
+        isValid: false,
+        types: [
+          '求职',
+          '校园生活',
+          '情感天地'
+        ],
+        postLoading: false,
         items: [
           {
             text: "主页",
@@ -38,6 +103,10 @@
             text: "发布帖子",
             disabled: true
           }
+        ],
+        titleRules: [
+          v => !!v || '标题不能为空',
+          v => v.length <= 25 || '请勿超过25个字'
         ],
         markdownOption: {
           bold: true, // 粗体
@@ -72,6 +141,13 @@
         },
         handbook: "#### 这是手册",
       }
+    },
+    methods: {
+      post() {
+        if (!this.title || this.title.length > 25 || !this.type) {
+          console.log("not validate");//这里再次校验有问题
+        }
+      },
     }
   }
 </script>

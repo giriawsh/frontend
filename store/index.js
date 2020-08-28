@@ -18,7 +18,8 @@ export const state = () => ({
       text: 'Profile',
       href: '/profile'
     }
-  ]
+  ],
+  username: ''
 });
 export const getters = {
   links: (state, getters) => {
