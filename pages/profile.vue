@@ -1,20 +1,29 @@
 <template>
   <v-container
+    style ="height:400px;
+            width:2000px;
+            position:static;
+            top:500px"
     fluid
     tag="section"
   >
-    <v-row justify="center">
-      <v-col
-        cols="12"
-        md="10"
-      >
-        <the-breadcrumb layout-class="pl-3 pb-0"/>
-        <div class="py-3"/>
-        <v-content>
-          <v-card>
-            <v-card-title class="grey darken-3" style="color: white;">
-              用户信息
-            </v-card-title>
+    <div style="height:400px;
+              width:1000px;
+              
+              position:absolute;
+              top:-20px">
+      <v-row justify="center">
+        <v-col
+          cols="12"
+          md="10"
+        >
+          <the-breadcrumb layout-class="pl-3 pb-0"/>
+          <div class="py-3"/>
+          <v-content>
+            <v-card>
+              <v-card-title class="grey darken-3" style="color: white;">
+                用户信息
+              </v-card-title>
             <v-card-text>
               <v-layout row>
                 <v-flex xs2>
@@ -49,7 +58,9 @@
         </v-content>
       </v-col>
     </v-row>
+  </div>
   </v-container>
+
 </template>
 <script>
   import TheBreadcrumb from "../components/TheBreadcrumb";

@@ -1,7 +1,5 @@
 <template>
-  <v-app-bar
-    flat
-  >
+  <v-app-bar>
     <v-app-bar-nav-icon
       class="hidden-md-and-up"
       @click="toggleDrawer"
@@ -31,9 +29,10 @@
         flat
         hide-details
         solo-inverted
-        style="max-width: 300px;"
+        style="max-width: 200px;"
       />
-      <v-btn icon>
+      <v-btn icon
+            style="right:2px">
         <v-icon>mdi-heart</v-icon>
       </v-btn>
       <v-menu
@@ -44,6 +43,7 @@
             icon
             v-bind:left="attrs"
             v-on="on"
+            style="right:0px"
           >
             <v-icon>
               mdi-account-circle
