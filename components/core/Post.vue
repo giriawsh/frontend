@@ -10,10 +10,19 @@
           </v-card-text>
           <v-card-actions>
             <v-list-item class="grow">
+              <v-chip
+                label
+                color="blue"
+                text-color="white"
+              >
+                <v-icon left>mdi-label</v-icon>
+                {{topic}}
+              </v-chip>
               <v-row
                 align="center"
                 justify="end"
               >
+
                 <v-icon class="mr-1">mdi-heart</v-icon>
                 <span class="subheading mr-2">{{likeCount}}</span>
                 <span class="mr-1">  </span>
@@ -64,6 +73,7 @@
       this.viewCount = response.viewCount;
       this.commentCount = response.commentCount;
       this.likeCount = response.votesCount;
+      this.topic = response.topic.title;
     }
   }
 </script>
