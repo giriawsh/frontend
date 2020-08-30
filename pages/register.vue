@@ -1,5 +1,9 @@
 <template>
-  <v-container fluid>
+
+  <v-container fluid
+               style ="height:600px;
+                      width:2000px;
+                      top:10">
     <v-row justify="center">
       <v-col
         cols="12"
