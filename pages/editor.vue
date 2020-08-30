@@ -45,7 +45,8 @@
               </v-layout>
             </v-form>
             <v-container fluid>
-              <mavon-editor :toolbars="markdownOption" v-model="post.content" style="width: 100%; height: 800px;" :ishljs = "true" @change="updateDoc" @save="saveDoc"/>
+              <mavon-editor :toolbars="markdownOption" v-model="post.content" style="width: 100%; height: 800px;"
+                            :ishljs="true" @change="updateDoc" @save="saveDoc"/>
             </v-container>
             <v-flex>
               <v-btn
@@ -74,6 +75,7 @@
 </template>
 <script>
   import TheBreadcrumb from "../components/TheBreadcrumb";
+  import axios from "~/plugins/axios";
 
   export default {
     middleware: 'auth',
@@ -85,19 +87,9 @@
         alertDialog: false,
         isValid: false,
         types: [
-          {
-            text: '求职',
-            value: 'job',
-          },
-          {
-            text: '校园生活',
-            value: 'school',
-          },
-          {
-            text: '情感天地',
-            value: 'motion',
-          },
-
+          '求职',
+          '校园生活',
+          '情感天地',
         ],
         postLoading: false,
         items: [
@@ -148,20 +140,36 @@
         },
         post: {
           content: "### TEST",
+          html: "",
         }
       }
     },
     methods: {
-      updateDoc(markdown, html) {
-        console.log("markdownupdate="+markdown);
-        console.log("htmlupdate="+html);
+      updateDoc(markdown, render) {
+        console.log("markdownupdate=" + markdown);
+        console.log("htmlupdate=" + render);
+        this.html = render;
       },
-      saveDoc(markdown, html) {
-        console.log("markdownsave="+markdown);
-        console.log("htmlsave="+html);
+      saveDoc(markdown, render) {
+        console.log("markdownsave=" + markdown);
+        console.log("htmlsave=" + render);
+        this.html = render;
       },
-      postDoc() {
-
+      async postDoc() {
+        var author = "http://localhost:8091/api/users/" + this.$store.state.username;
+        console.log("author=" + author);
+        var topic = "http://localhost:8091/api/topics/" + this.type;
+        let response = await axios.post(
+          '/posts',
+          {
+            title: this.title,
+            content: this.html,
+            publisher: author,
+            topic: topic,
+          }
+        );
+        console.log(response);
+        this.$router.push('/post/' + response.id);
       },
     },
     // updated() {
