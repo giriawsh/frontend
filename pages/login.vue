@@ -17,7 +17,7 @@
               justify-center="center"
             >
               <v-flex class="frame">
-                <v-form>
+                <v-form v-model="isValid">
                   <v-text-field
                     v-model="form.username"
                     prepend-icon="mdi-account"
@@ -25,6 +25,7 @@
                     @keyup.enter.native="login"
                     required
                     label="用户名"
+                    :rules="[v=>!!v || '请输入用户名']"
                   >
                   </v-text-field>
                   <v-text-field
@@ -36,6 +37,7 @@
                     @click:append="showPwd = !showPwd"
                     required
                     label="密码"
+                    :rules="[v=>!!v || '请输入密码']"
                   >
                   </v-text-field>
                   <v-layout
@@ -60,6 +62,7 @@
                         large
                         color="primary"
                         width="100px"
+                        :disabled="!isValid"
                       >
                         登录
                       </v-btn>
@@ -87,6 +90,7 @@
         },
         loginLoading: false,
         showPwd: false,
+        isValid: false,
       }
     },
     methods: {
