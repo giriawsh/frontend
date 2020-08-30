@@ -9,7 +9,7 @@
           >
             <template v-for="(post, index) in posts">
               <v-list-item
-                :key="post.id"
+                :key="index"
                 @click="handlePostClick(post.id)"
               >
                 <template>
@@ -25,14 +25,24 @@
                       class="grey--text text--darken-1 mx-3"
                     >
                      <v-icon small>mdi-cards-heart</v-icon>
-                                          <small v-text="post.likeCount"/>
-                  </span>
+                      <small v-text="post.likeCount"/>
+                    </span>
                     <span
                       class="grey--text text--darken-1"
                     >
                     <v-icon small>mdi-eye</v-icon>
-                                         <small v-text="post.viewCount"/>
-                  </span>
+                      <small v-text="post.viewCount"/>
+                    </span>
+                    <span>
+                      <v-chip
+                        label
+                        color="pink"
+                        text-color="white"
+                      >
+                      <v-icon left>mdi-label</v-icon>
+                      {{post.topic}}
+                    </v-chip>
+                    </span>
                   </v-list-item-content>
                   <v-list-item-action>
                     <v-list-item-action-text v-text="'发表于 '+post.dateTime">
@@ -40,10 +50,7 @@
                   </v-list-item-action>
                 </template>
               </v-list-item>
-              <v-divider
-                v-if="index + 1 < posts.length"
-                :key="index"
-              >
+              <v-divider>
               </v-divider>
             </template>
 
@@ -124,6 +131,11 @@
             text: '发表人',
             value: 'publisher',
             sortable: false,
+          },
+          {
+            text: '版块',
+            value: 'topic',
+            sortable: false,
           }
         ],
         itemsPerPage: 10,//每页条目数
@@ -153,6 +165,7 @@
             url: tempPost[i]['_links']['self']['href'],
             method: 'get'
           });
+          console.log("topic = " + Author['topic']['title']);
           this.posts.push({
             id: tempPost[i]['id'],
             title: tempPost[i]['title'],
@@ -160,7 +173,8 @@
             publisher: Author['publisher']['username'],
             viewCount: tempPost[i]['viewCount'],
             commentCount: tempPost[i]['commentCount'],
-            likeCount: tempPost[i]['votesCount']
+            likeCount: tempPost[i]['votesCount'],
+            topic: Author['topic']['title'],
           })
         }
         // console.log(this.posts);
@@ -182,6 +196,7 @@
             url: tempPost[i]['_links']['self']['href'],
             method: 'get'
           });
+          console.log("topic = " + Author['topic']['title']);
           this.posts.push({
             id: tempPost[i]['id'],
             title: tempPost[i]['title'],
@@ -189,14 +204,15 @@
             publisher: Author['publisher']['username'],
             viewCount: tempPost[i]['viewCount'],
             commentCount: tempPost[i]['commentCount'],
-            likeCount: tempPost[i]['votesCount']
+            likeCount: tempPost[i]['votesCount'],
+            topic: Author['topic']['title'],
           })
         }
         // console.log(this.posts);
       },
-      handlePostClick(id){
-        console.log("click on"+id);
-        this.$router.push('/post/'+id);
+      handlePostClick(id) {
+        console.log("click on" + id);
+        this.$router.push('/post/' + id);
       }
     },
     watch: {

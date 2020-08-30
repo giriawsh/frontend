@@ -45,7 +45,7 @@
               </v-layout>
             </v-form>
             <v-container fluid>
-                <mavon-editor :toolbars="markdownOption" v-model="handbook" style="width: 100%; height: 800px;"/>
+              <mavon-editor :toolbars="markdownOption" v-model="post.content" style="width: 100%; height: 800px;" :ishljs = "true" @change="updateDoc" @save="saveDoc"/>
             </v-container>
             <v-flex>
               <v-btn
@@ -57,7 +57,7 @@
               </v-btn>
               <v-btn
                 :loading="postLoading"
-                @click="post"
+                @click="postDoc"
                 large
                 color="primary"
                 width="100px"
@@ -146,11 +146,21 @@
           subfield: true, // 单双栏模式
           preview: true, // 预览
         },
-        handbook: "#### 这是手册",
+        post: {
+          content: "### TEST",
+        }
       }
     },
     methods: {
-      post() {
+      updateDoc(markdown, html) {
+        console.log("markdownupdate="+markdown);
+        console.log("htmlupdate="+html);
+      },
+      saveDoc(markdown, html) {
+        console.log("markdownsave="+markdown);
+        console.log("htmlsave="+html);
+      },
+      postDoc() {
 
       },
     },
