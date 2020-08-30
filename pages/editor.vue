@@ -12,7 +12,6 @@
         <template>
           <v-main>
             <v-form v-model="isValid">
-
               <v-layout row>
                 <v-flex>
                   <v-subheader>标题:</v-subheader>

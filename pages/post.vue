@@ -30,6 +30,7 @@
   import CoreView from '~/components/core/View.vue'
   import CoreSideBar from '~/components/core/SideBar.vue'
   import CorePost from '~/components/core/Post.vue'
+  import TheBreadcrumb from "../components/TheBreadcrumb";
 
   export default {
     name: "index",
@@ -39,7 +40,8 @@
       CoreFooter,
       CoreView,
       CoreSideBar,
-      CorePost
+      CorePost,
+      TheBreadcrumb
     },
     mounted() {
       console.log(this.$route);
