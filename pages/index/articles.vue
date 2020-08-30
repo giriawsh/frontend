@@ -10,7 +10,6 @@
           :items-per-page="itemsPerPage"
           hide-default-footer
           class="elevation-1"
-          @page-count="pageCount = $event"
         >
         </v-data-table>
         <v-pagination

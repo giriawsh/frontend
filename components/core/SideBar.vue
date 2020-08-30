@@ -73,7 +73,8 @@
           {
             title: 'test',
             content: 'content',
-            publisher: "http://localhost:8091/users/admin"
+            publisher: "http://localhost:8091/api/users/admin",
+            comments: []
           }
         );
         this.$router.push('/editor')

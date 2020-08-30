@@ -1,15 +1,9 @@
 <template>
   <v-container
-    style ="height:400px;
-            width:2000px;
-            position:static;
-            top:500px"
     fluid
-    tag="section"
   >
-    <div style="height:400px;
+    <div style="
               width:1000px;
-              
               position:absolute;
               top:-20px">
       <v-row justify="center">
@@ -60,7 +54,6 @@
     </v-row>
   </div>
   </v-container>
-
 </template>
 <script>
   import TheBreadcrumb from "../components/TheBreadcrumb";

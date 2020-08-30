@@ -1,9 +1,5 @@
 <template>
-
-  <v-container fluid
-               style ="height:600px;
-                      width:2000px;
-                      top:10">
+  <v-container fluid>
     <v-row justify="center">
       <v-col
         cols="12"
@@ -103,5 +99,5 @@
   }
 </script>
 <style>
-
+  @import "../assets/public.css";
 </style>

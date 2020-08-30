@@ -5,10 +5,10 @@
     <v-content>
       <nuxt/>
     </v-content>
-    <div style="position:fixed;
-            bottom:0px;
-            height:100;
-            width:100%">
+<!--    <div style="position:fixed;-->
+<!--            bottom:0px;-->
+<!--            height:100;-->
+<!--            width:100%">-->
     <v-footer
       class="justify-center"
       color="#292929"
@@ -18,7 +18,7 @@
         &copy; {{ (new Date()).getFullYear() }} — Powered 💜 by BUPT Homework Team
       </div>
     </v-footer>
-    </div>
+<!--    </div>-->
   </v-app>
 </template>
 
