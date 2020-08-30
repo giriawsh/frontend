@@ -7,7 +7,7 @@
     </div>
     <div class="panel-content">
       <v-app class="login-con">
-        <v-content>
+        <v-main>
           <v-container
             fluid
             fill-height
@@ -22,7 +22,6 @@
                     v-model="form.username"
                     prepend-icon="mdi-account"
                     clearable
-                    @keyup.enter.native="login"
                     required
                     label="用户名"
                     :rules="[v=>!!v || '请输入用户名']"
@@ -31,13 +30,12 @@
                   <v-text-field
                     v-model="form.password"
                     prepend-icon="mdi-lock"
-                    @keyup.enter.native="login"
-                    :opened-icon="showPwd ? 'visibility off' : 'visibility'"
                     :type="showPwd ? 'text' : 'password'"
-                    @click:append="showPwd = !showPwd"
+                    :append-icon ="showPwd ? 'mdi-eye-off' : 'mdi-eye'"
                     required
                     label="密码"
                     :rules="[v=>!!v || '请输入密码']"
+                    @click:append="showPwd = !showPwd"
                   >
                   </v-text-field>
                   <v-layout
@@ -72,7 +70,7 @@
               </v-flex>
             </v-layout>
           </v-container>
-        </v-content>
+        </v-main>
       </v-app>
     </div>
   </div>
@@ -86,7 +84,7 @@
       return {
         form: {
           username: 'admin',
-          password: '123',
+          password: 'admin',
         },
         loginLoading: false,
         showPwd: false,
@@ -107,16 +105,19 @@
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         });
-        const response1 = await axios({
-          url: '/posts?size=20&page=0',
-          method: 'get'
-        });
-        console.log(response);
-
-        this.$router.push('/');
+        if (this.isLoginSuccess(response)) {
+          this.$store.commit('setUsername', this.form.username);
+          this.$router.push('/');
+        } else {
+          alert("登录失败");
+          this.loginLoading = false;
+        }
       },
       register() {
         this.$router.push('/register')
+      },
+      isLoginSuccess(response) {
+        return response === undefined;
       }
     }
   }

@@ -41,7 +41,6 @@
         <template v-slot:activator="{on, attrs}">
           <v-btn
             icon
-            v-bind:left="attrs"
             v-on="on"
             style="right:0px"
           >

@@ -10,6 +10,8 @@ myaxios.interceptors.response.use(
   },
   function (error) {
     // ...
+    console.log(error);
+    return undefined;
   }
 );
 export default myaxios;

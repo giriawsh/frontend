@@ -11,7 +11,7 @@
         class="ma-2 white-text"
         @click="jumpToEditor"
       >
-        <v-icon left dark>mdi-plus</v-icon>
+        <v-icon dark>mdi-plus</v-icon>
         Create Article
       </v-btn>
     </v-card>
@@ -69,14 +69,6 @@
     },
     methods: {
       jumpToEditor() {
-        let response = axios.post('/posts',
-          {
-            title: 'test',
-            content: 'content',
-            publisher: "http://localhost:8091/api/users/admin",
-            comments: []
-          }
-        );
         this.$router.push('/editor')
       }
     }

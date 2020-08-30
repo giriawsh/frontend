@@ -2,9 +2,9 @@
   <v-app>
     <core-app-bar/>
     <core-drawer/>
-    <v-content>
+    <v-main>
       <nuxt/>
-    </v-content>
+    </v-main>
 <!--    <div style="position:fixed;-->
 <!--            bottom:0px;-->
 <!--            height:100;-->

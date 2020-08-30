@@ -2,16 +2,14 @@
   <div class="name-card">
     <v-card ref="card" :color="color" :dark="true" :img="cardBgImage">
       <v-card-text>
-        <div class="layout ma-0 align-center" :class="column">
+        <div class="layout ma-0 align-center">
           <v-avatar
             :size="96"
             color="primary"
           >
-            <img :src="avatar.src"
-                 :alt="name"/>
 
           </v-avatar>
-          <div class="flex" :class="text-sm-center">
+          <div class="flex">
             <div class="subheading">
               {{name}}
             </div>

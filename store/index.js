@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export const state = () => ({
   drawer: false,
-    items: [
+  items: [
     {
       text: 'Home',
       href: '/',
@@ -29,5 +29,6 @@ export const getters = {
 export const mutations = {
   setDrawer: (state, payload) => (state.drawer = payload),
   toggleDrawer: state => (state.drawer = !state.drawer),
+  setUsername: (state, value) => state.username = value
 };
 
