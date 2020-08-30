@@ -31,6 +31,9 @@
                 <span class="mr-1">  </span>
                 <v-icon class="mr-1">mdi-eye</v-icon>
                 <span class="subheading mr-2">{{viewCount}}</span>
+                <a-button type="primary">
+                  Primary
+                </a-button>
               </v-row>
             </v-list-item>
           </v-card-actions>
