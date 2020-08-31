@@ -64,12 +64,17 @@
     data() {
       return {
         user: {
-          username: "admin",
-          password: "123",
-          sex: "女",
+          username: "",
+          password: "",
+          sex: "",
         },
 
       }
+    },
+    mounted() {
+      console.log("!!!");
+      console.log(this.$store.state.username);
+      this.username = this.$store.state.username;
     },
     methods: {
       jumpBack() {

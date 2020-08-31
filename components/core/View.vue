@@ -50,7 +50,12 @@
           }
         ]
       }
-    }
+    },
+    mounted() {
+      console.log("!!!");
+      console.log(this.$store.state.username);
+      this.username = this.$store.state.username;
+    },
   }
 </script>
 <style scoped>

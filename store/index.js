@@ -1,8 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
+import * as Cookie from 'js-cookie'
 
 Vue.use(Vuex);
-
+export const plugins = [createPersistedState({
+  storage: window.sessionStorage,
+  reducer(val) {
+    return {
+      // 只储存state中的assessmentData
+      username: val.username,
+      authority: val.authority,
+    }
+  }
+})];
 export const state = () => ({
   drawer: false,
   items: [
@@ -19,7 +30,8 @@ export const state = () => ({
       href: '/profile'
     }
   ],
-  username: ''
+  username: '',
+  authority: '',
 });
 export const getters = {
   links: (state, getters) => {
@@ -29,6 +41,7 @@ export const getters = {
 export const mutations = {
   setDrawer: (state, payload) => (state.drawer = payload),
   toggleDrawer: state => (state.drawer = !state.drawer),
-  setUsername: (state, value) => state.username = value
+  setUsername: (state, value) => state.username = value,
+  setAuthority: (state, value) => state.authority = value,
 };
 

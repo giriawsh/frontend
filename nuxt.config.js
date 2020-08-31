@@ -1,5 +1,5 @@
 export default {
-  mode: 'universal',
+  mode: 'spa',
   /*
   ** Headers of the page
   */
@@ -35,7 +35,8 @@ export default {
       ssr: false //仅在客户端渲染
     },
     {src: '~plugins/mavon-editor', ssr: false},
-    '@/plugins/ant-design-vue'
+    '@/plugins/ant-design-vue',
+    { src: '~/plugins/vuex-persistedstate', ssr: false },
   ],
   /*
   ** Nuxt.js dev-modules

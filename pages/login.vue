@@ -107,6 +107,7 @@
         });
         if (this.isLoginSuccess(response)) {
           this.$store.commit('setUsername', this.form.username);
+          console.log(this.$store.state.username);
           this.$router.push('/');
         } else {
           alert("登录失败");
