@@ -105,9 +105,17 @@
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         });
+        let authResponse = await axios({
+          url: '/users/'+this.form.username+'/authorities',
+          method: 'get',
+        });
+        // console.log(authResponse);
+        this.$store.commit('setAuthority', authResponse['_embedded']['authorities'][0]['authority']);
+        // console.log("???");
+        // console.log(this.$store.state.authority);
         if (this.isLoginSuccess(response)) {
           this.$store.commit('setUsername', this.form.username);
-          console.log(this.$store.state.username);
+          // console.log(this.$store.state.username);
           this.$router.push('/');
         } else {
           alert("登录失败");

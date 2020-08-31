@@ -10,7 +10,7 @@ export const plugins = [createPersistedState({
     return {
       // 只储存state中的assessmentData
       username: val.username,
-      authority: val.authority,
+      authority: val.authority
     }
   }
 })];
