@@ -10,9 +10,9 @@
           md="12"
         >
           <div class="text-center">
-            <div class="brand">
-              <h1>北邮作业版论坛</h1>
-              <h3>Let's take a look</h3>
+            <div class="brand" >
+              <h1 style="color: #d5d5d5 !important;">北邮作业版论坛</h1>
+              <h3 style="color: #d5d5d5 !important;">Let's take a look</h3>
             </div>
           </div>
         </v-col>

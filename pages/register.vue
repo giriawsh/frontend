@@ -76,8 +76,10 @@
 </template>
 <script>
   import TheBreadcrumb from "../components/TheBreadcrumb";
+  import axios from "~/plugins/axios";
+
   export default {
-    components:{
+    components: {
       TheBreadcrumb
     },
     data() {
@@ -93,7 +95,16 @@
     },
     methods: {
       register() {
-
+        let response = axios.post('/users', {
+          username: this.username,
+          password: this.password,
+          enabled: true,
+          authorities: [
+            "http://localhost:8091/api/authorities/user"
+          ],
+          sex: this.sex
+        });
+        this.$router.push('/login');
       }
     }
   }
