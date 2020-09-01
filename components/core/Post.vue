@@ -47,7 +47,7 @@
               <a-avatar
                 slot="avatar"
                 src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                alt="Han Solo"
+                alt="User"
               />
               <p slot="content">
                 {{item.content}}
