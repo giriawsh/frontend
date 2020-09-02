@@ -148,7 +148,6 @@
         this.$router.push('/login')
       },
       async onPageChange(page) {
-        //重写一遍将不会出现硬刷新问题（原理未知）
         this.posts = [];
         let response = await axios({
           url: `/posts?size=${this.itemsPerPage}&page=${this.page - 1}`,
@@ -166,16 +165,18 @@
             method: 'get'
           });
           console.log("topic = " + Author['topic']['title']);
-          this.posts.push({
-            id: tempPost[i]['id'],
-            title: tempPost[i]['title'],
-            dateTime: s,
-            publisher: Author['publisher']['username'],
-            viewCount: tempPost[i]['viewCount'],
-            commentCount: tempPost[i]['commentCount'],
-            likeCount: tempPost[i]['votesCount'],
-            topic: Author['topic']['title'],
-          })
+          if(Author['topic']['title']==="求职"){
+            this.posts.push({
+              id: tempPost[i]['id'],
+              title: tempPost[i]['title'],
+              dateTime: s,
+              publisher: Author['publisher']['username'],
+              viewCount: tempPost[i]['viewCount'],
+              commentCount: tempPost[i]['commentCount'],
+              likeCount: tempPost[i]['votesCount'],
+              topic: Author['topic']['title'],
+            })
+          }
         }
         // console.log(this.posts);
       },
@@ -197,16 +198,18 @@
             method: 'get'
           });
           console.log("topic = " + Author['topic']['title']);
-          this.posts.push({
-            id: tempPost[i]['id'],
-            title: tempPost[i]['title'],
-            dateTime: s,
-            publisher: Author['publisher']['username'],
-            viewCount: tempPost[i]['viewCount'],
-            commentCount: tempPost[i]['commentCount'],
-            likeCount: tempPost[i]['votesCount'],
-            topic: Author['topic']['title'],
-          })
+          if(Author['topic']['title']==="校园生活"){
+            this.posts.push({
+              id: tempPost[i]['id'],
+              title: tempPost[i]['title'],
+              dateTime: s,
+              publisher: Author['publisher']['username'],
+              viewCount: tempPost[i]['viewCount'],
+              commentCount: tempPost[i]['commentCount'],
+              likeCount: tempPost[i]['votesCount'],
+              topic: Author['topic']['title'],
+            })
+          }
         }
         // console.log(this.posts);
       },
