@@ -45,8 +45,18 @@
           },
           {
             id: 3,
+            name: "求职",
+            route: '/job'
+          },
+          {
+            id: 3,
             name: "校园生活",
             route: '/school'
+          },
+          {
+            id: 3,
+            name: "情感天地",
+            route: '/motion'
           }
         ]
       }
