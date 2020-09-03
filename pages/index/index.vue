@@ -75,14 +75,6 @@
         </v-pagination>
       </div>
     </v-card-text>
-    <v-btn
-      color="info"
-      class="ma-2 white-text"
-      @click="jumpToEditor"
-    >
-      <v-icon dark>mdi-plus</v-icon>
-      Comment
-    </v-btn>
   </v-card>
 </template>
 <script>
@@ -93,7 +85,7 @@
     data() {
       return {
         page: 1,//当前页面号
-        pageLength: 20,//总页面数
+        pageLength: 0,//总页面数
         pageVisible: 7,//分页条中可见页面号数
         headers: [//id title content dataTime viewCount commentCount
           {
@@ -148,84 +140,58 @@
         this.$router.push('/login')
       },
       async onPageChange(page) {
-        //重写一遍将不会出现硬刷新问题（原理未知）
-        this.posts = [];
-        let response = await axios({
-          url: `/posts?size=${this.itemsPerPage}&page=${this.page - 1}`,
-          method: 'get'
-        });
-        let tempPost = response['_embedded']['posts'];
-        const total = tempPost.length;
-
-        // console.log(tempPost);
-        for (let i = 0; i < total; i++) {
-          var d = new Date(tempPost[i]['dateTime']);
-          var s = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
-          var Author = await axios({
-            url: tempPost[i]['_links']['self']['href'],
-            method: 'get'
-          });
-          console.log("topic = " + Author['topic']['title']);
-          this.posts.push({
-            id: tempPost[i]['id'],
-            title: tempPost[i]['title'],
-            dateTime: s,
-            publisher: Author['publisher']['username'],
-            viewCount: tempPost[i]['viewCount'],
-            commentCount: tempPost[i]['commentCount'],
-            likeCount: tempPost[i]['votesCount'],
-            topic: Author['topic']['title'],
-          })
-        }
-        // console.log(this.posts);
+        this.page = page;
+        await this.getData();
       },
       async getData() {
         this.posts = [];
         let response = await axios({
-          url: `/posts?size=${this.itemsPerPage}&page=${this.page - 1}`,
+          url: `/posts?size=${this.itemsPerPage}&page=${this.page - 1}&sort=rank,desc`,
           method: 'get'
         });
         let tempPost = response['_embedded']['posts'];
+        this.pageLength = response.page.totalPages;
         const total = tempPost.length;
 
-        // console.log(tempPost);
+        const posts = [];
         for (let i = 0; i < total; i++) {
           var d = new Date(tempPost[i]['dateTime']);
           var s = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
-          var Author = await axios({
-            url: tempPost[i]['_links']['self']['href'],
+          var publisher = await axios({
+            url: tempPost[i]['_links']['publisher']['href'],
             method: 'get'
           });
-          console.log("topic = " + Author['topic']['title']);
-          this.posts.push({
+          var topic = await axios({
+            url: tempPost[i]['_links']['topic']['href'],
+            method: 'get'
+          });
+
+
+          posts.push({
             id: tempPost[i]['id'],
             title: tempPost[i]['title'],
             dateTime: s,
-            publisher: Author['publisher']['username'],
+            publisher: publisher['username'],
             viewCount: tempPost[i]['viewCount'],
             commentCount: tempPost[i]['commentCount'],
             likeCount: tempPost[i]['votesCount'],
-            topic: Author['topic']['title'],
-          })
+            topic: topic['title'],
+          });
+
         }
-        // console.log(this.posts);
+        this.posts = posts;
       },
-      handlePostClick(id) {
-        console.log("click on" + id);
-        this.$router.push('/post/' + id);
-      }
     },
     watch: {
       options: {
         handler() {
           this.getData();
-          console.log("page=" + this.page);
         }
       },
       deep: true
     },
     mounted() {
       this.getData();
-    },
+    }
   }
 </script>

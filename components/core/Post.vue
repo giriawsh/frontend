@@ -41,7 +41,7 @@
           :data-source="comments"
           item-layout="horizontal"
         >
-          <a-list-item slot="renderItem" slot-scope="item">
+          <a-list-item slot="renderItem" slot-scope="item" :key="item.id">
             <a-comment>
               <a slot="author">{{item.author}}</a>
               <a-avatar
@@ -129,27 +129,28 @@
         this.likeCount = response.votesCount;
         this.topic = response.topic.title;
 
-        this.comments = [];
         let commentResponse = await axios({
           url: '/posts/' + this.$route.params.id + '/comments',
           method: 'get',
         });
         let commentLen = commentResponse['_embedded']['comments'].length;
-
+        var comments = [];
         for (let i = 0; i < commentLen; i++) {
           let commenterHref = await axios.get(commentResponse['_embedded']['comments'][i]['_links']['commenter']['href']) || "";
           console.log(commenterHref);
           let commenter = commenterHref['username'] || "匿名用户";
           console.log("commenter="+commenter);
-          this.comments.push({
+          comments.push({
+            id: commentResponse['_embedded']['comments'][i].id,
             author: commenter,
             content: commentResponse['_embedded']['comments'][i]['content'],
             dateTime: commentResponse['_embedded']['comments'][i]['dateTime'],
             avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
           })
         }
+        this.comments = comments;
       },
-      handleCommentSubmit() {
+      async handleCommentSubmit() {
         if (!this.value) {
           return;
         }
@@ -161,14 +162,20 @@
         // let date = new Date();
         // let dateTime = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
         console.log(this.$store.state.username);
-        let response = axios.post('/comments',
+        let response = await axios.post('/comments',
           {
             commenter: "http://localhost:8091/api/users/" + this.$store.state.username,
             content: this.value,
             post: "http://localhost:8091/api/posts/" + this.$route.params.id,
           });
         this.submitting = false;
-        this.getComment();
+        this.comments.push({
+          id: response.id,
+          author: this.$store.state.username,
+          content: this.value,
+          dateTime: response.dateTime,
+          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        });
         this.value = '';
       },
       handleCommentChange(e) {

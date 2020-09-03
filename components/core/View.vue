@@ -9,7 +9,7 @@
       dark
       style="border-radius: 5px"
     >
-      <v-tab v-for="tab of tabs" :key="tab.id" :to="tab.route" ripple>
+      <v-tab v-for="tab of tabs" :key="tab.id" :to="tab.to" ripple>
         {{tab.name}}
       </v-tab>
       <!--    如果想要保存tabs切换的效果-->
@@ -23,48 +23,48 @@
       <!--        <router-view v-if="active === '/school'" />-->
       <!--      </v-tab-item>-->
     </v-tabs>
-    <router-view/>
+    <router-view :key="key"/>
   </v-col>
 </template>
 <script>
+  import axios from '~/plugins/axios';
+
   export default {
     name: 'CoreView',
     data() {
       return {
         active: null,
-        text: 'hahahahha',
-        tabs: [{
-          id: 1,
-          name: "全部",
-          route: '/articles'
-        },
-          {
-            id: 2,
-            name: "精华",
-            route: '/essence'
-          },
-          {
-            id: 3,
-            name: "求职",
-            route: '/job'
-          },
-          {
-            id: 3,
-            name: "校园生活",
-            route: '/school'
-          },
-          {
-            id: 3,
-            name: "情感天地",
-            route: '/motion'
-          }
-        ]
+        tabs: []
       }
     },
-    mounted() {
-      console.log("!!!");
-      console.log(this.$store.state.username);
-      this.username = this.$store.state.username;
+    computed: {
+      key() {
+        return this.$route.path + Math.random();
+      },
+    },
+    async mounted() {
+      const topics = await axios({
+        method: 'get',
+        url: '/topics'
+      });
+      const tabs = [{
+        id: 'all',
+        name: '浏览',
+        to: `/`
+      }, {
+        id: 'new',
+        name: '最新',
+        to: `/new`
+      }
+      ];
+      for (let t of topics["_embedded"].topics) {
+        tabs.push({
+          id: t.title,
+          name: t.title,
+          to: `/topic/${t.title}`
+        })
+      }
+      this.tabs = tabs;
     },
   }
 </script>
