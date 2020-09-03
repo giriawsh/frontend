@@ -22,7 +22,6 @@
             align="center"
             justify="end"
           >
-
             <v-icon class="mr-1">mdi-heart</v-icon>
             <span class="subheading mr-2">{{likeCount}}</span>
             <span class="mr-1">  </span>
