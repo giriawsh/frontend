@@ -1,0 +1,73 @@
+[
+  {
+    "name": "about",
+    "path": "/about",
+    "component": "C:\\\\Users\\\\user\\\\Desktop\\\\zyq_0829\\\\frontend\\\\pages\\\\about.vue",
+    "chunkName": "pages/about",
+    "_name": "_2d92d3f6"
+  },
+  {
+    "name": "editor",
+    "path": "/editor",
+    "component": "C:\\\\Users\\\\user\\\\Desktop\\\\zyq_0829\\\\frontend\\\\pages\\\\editor.vue",
+    "chunkName": "pages/editor",
+    "_name": "_e39a59b6"
+  },
+  {
+    "name": "login",
+    "path": "/login",
+    "component": "C:\\\\Users\\\\user\\\\Desktop\\\\zyq_0829\\\\frontend\\\\pages\\\\login.vue",
+    "chunkName": "pages/login",
+    "_name": "_5ad3d83e"
+  },
+  {
+    "name": "profile",
+    "path": "/profile",
+    "component": "C:\\\\Users\\\\user\\\\Desktop\\\\zyq_0829\\\\frontend\\\\pages\\\\profile.vue",
+    "chunkName": "pages/profile",
+    "_name": "_fee513be"
+  },
+  {
+    "name": "register",
+    "path": "/register",
+    "component": "C:\\\\Users\\\\user\\\\Desktop\\\\zyq_0829\\\\frontend\\\\pages\\\\register.vue",
+    "chunkName": "pages/register",
+    "_name": "_35f7254a"
+  },
+  {
+    "path": "/",
+    "component": "C:\\\\Users\\\\user\\\\Desktop\\\\zyq_0829\\\\frontend\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "children": [
+      {
+        "name": "index",
+        "path": "",
+        "component": "C:\\\\Users\\\\user\\\\Desktop\\\\zyq_0829\\\\frontend\\\\pages\\\\index\\\\index.vue",
+        "chunkName": "pages/index/index",
+        "_name": "_2cf34c78"
+      },
+      {
+        "name": "index-articles",
+        "path": "articles",
+        "component": "C:\\\\Users\\\\user\\\\Desktop\\\\zyq_0829\\\\frontend\\\\pages\\\\index\\\\articles.vue",
+        "chunkName": "pages/index/articles",
+        "_name": "_749bdcf2"
+      },
+      {
+        "name": "index-essence",
+        "path": "essence",
+        "component": "C:\\\\Users\\\\user\\\\Desktop\\\\zyq_0829\\\\frontend\\\\pages\\\\index\\\\essence.vue",
+        "chunkName": "pages/index/essence",
+        "_name": "_2793faf6"
+      },
+      {
+        "name": "index-school",
+        "path": "school",
+        "component": "C:\\\\Users\\\\user\\\\Desktop\\\\zyq_0829\\\\frontend\\\\pages\\\\index\\\\school.vue",
+        "chunkName": "pages/index/school",
+        "_name": "_41d44bbe"
+      }
+    ],
+    "_name": "_08ee70ca"
+  }
+]
