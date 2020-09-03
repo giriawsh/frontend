@@ -5,14 +5,23 @@
   >
     <name-card v-bind="item"/>
     <div class="py-3"/>
-    <v-card style="height: 80px;">
+    <v-card style="height: 90px;">
       <v-btn
         color="success"
-        class="ma-2 white-text"
+        class="ma-1 white-text"
         @click="jumpToEditor"
       >
         <v-icon dark>mdi-plus</v-icon>
         Create Article
+      </v-btn>
+      <v-btn
+        color="info"
+        class="ma-1 white-text"
+        @click="jumpToManage"
+        v-if="judgeAuth === 'admin'"
+      >
+        <v-icon dark>mdi-account-box-multiple</v-icon>
+        Manage Users
       </v-btn>
     </v-card>
     <div class="py-3"/>
@@ -62,7 +71,11 @@
               size: "36"
             }
           },
+        judgeAuth: "",
       }
+    },
+    created() {
+      this.judgeAuth = this.$store.state.authority;
     },
     components: {
       NameCard,
@@ -70,6 +83,9 @@
     methods: {
       jumpToEditor() {
         this.$router.push('/editor')
+      },
+      jumpToManage(){
+        this.$router.push('/manager')
       }
     }
   }

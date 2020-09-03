@@ -31,7 +31,9 @@
             <span class="mr-1">  </span>
             <v-icon class="mr-1">mdi-eye</v-icon>
             <span class="subheading mr-2">{{viewCount}}</span>
-
+            <span class="subheading mr-2" v-if="judgeAuth === true">
+              <v-icon class="mr-1" @click="deletePost">mdi-delete</v-icon>
+            </span>
           </v-row>
         </v-list-item>
       </v-card-actions>
@@ -55,7 +57,16 @@
               <a-tooltip slot="datetime">
                 <span> 发表于 {{ item.dateTime }}</span>
               </a-tooltip>
-<!--              <a-tooltip slot="author"><span>{{item.author}}</span></a-tooltip>-->
+              <!--              <a-tooltip slot="author"><span>{{item.author}}</span></a-tooltip>-->
+              <a-tooltip title="Delete" v-if="item.auth === true">
+                <a>
+                  <a-icon
+                    type="delete"
+                    color="#1976d2"
+                  >
+                  </a-icon>
+                </a>
+              </a-tooltip>
             </a-comment>
           </a-list-item>
         </a-list>
@@ -106,6 +117,7 @@
         submitting: false,
         value: '',
         likes: 0,
+        judgeAuth: this.judge(),
       }
     },
     async mounted() {
@@ -139,13 +151,14 @@
           let commenterHref = await axios.get(commentResponse['_embedded']['comments'][i]['_links']['commenter']['href']) || "";
           console.log(commenterHref);
           let commenter = commenterHref['username'] || "匿名用户";
-          console.log("commenter="+commenter);
+          console.log("commenter=" + commenter);
           comments.push({
             id: commentResponse['_embedded']['comments'][i].id,
             author: commenter,
             content: commentResponse['_embedded']['comments'][i]['content'],
             dateTime: commentResponse['_embedded']['comments'][i]['dateTime'],
             avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+            auth: this.$store.state.authority === 'admin' ? true : this.$store.state.username === commenter
           })
         }
         this.comments = comments;
@@ -154,8 +167,7 @@
         if (!this.value) {
           return;
         }
-        if(!this.$store.state.username)
-        {
+        if (!this.$store.state.username) {
           return this.$router.push('/login');
         }
         this.submitting = true;
@@ -180,7 +192,17 @@
       },
       handleCommentChange(e) {
         this.value = e.target.value;
-      }
+      },
+      judge() {
+        if (this.$store.state.authority === 'admin') {
+          return true;
+        } else return this.$store.state.username === this.author;
+      },
+      async deletePost() {
+        let response = await axios.delete("/posts/" + this.$route.params.id);
+        alert("successfully delete");
+        await this.$router.push("/");
+      },
     }
   }
 </script>

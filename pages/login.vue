@@ -110,11 +110,12 @@
           method: 'get',
         });
         // console.log(authResponse);
-        this.$store.commit('setAuthority', authResponse['_embedded']['authorities'][0]['authority']);
         // console.log("???");
         // console.log(this.$store.state.authority);
         if (this.isLoginSuccess(response)) {
           this.$store.commit('setUsername', this.form.username);
+          this.$store.commit('setAuthority', authResponse['_embedded']['authorities'][0]['authority']);
+          console.log(this.$store.state.authority);
           // console.log(this.$store.state.username);
           this.$router.push('/');
         } else {

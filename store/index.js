@@ -22,10 +22,6 @@ export const state = () => ({
       href: '/',
     },
     {
-      text: 'About',
-      href: '/about',
-    },
-    {
       text: 'Profile',
       href: '/profile'
     }
