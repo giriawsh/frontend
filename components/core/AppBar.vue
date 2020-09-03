@@ -52,7 +52,19 @@
         <v-list>
           <v-list-item
             v-for="(item, i) in profile_items"
+            v-if="judge !== undefined && judge !== ''"
             :key="i"
+            @click="handleLogoutClick"
+          >
+            <v-list-item-title>
+              {{item.title}}
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            v-for="(item, i) in login_items"
+            v-if="judge === undefined || judge === ''"
+            :key="i"
+            @click="handleLoginClick"
           >
             <v-list-item-title>
               {{item.title}}
@@ -68,21 +80,26 @@
     mapGetters,
     mapMutations,
   } from 'vuex'
+  import axios from "~/plugins/axios";
 
   export default {
     name: 'CoreAppBar',
     data() {
       return {
         profile_items: [
-          { title: 'Click Me 1' },
-          { title: 'Click Me 2' },
-          { title: 'Click Me 3' },
-          { title: 'Click Me 4' },
-        ]
+          { title: '退出登录' },
+        ],
+        login_items: [
+          { title: '登录' },
+        ],
+        judge: "",
       }
     },
     computed: {
       ...mapGetters(['links'])
+    },
+    mounted() {
+      this.firstMount();
     },
     methods: {
       ...mapMutations(['toggleDrawer']),
@@ -91,6 +108,21 @@
         e.stopPropagation();
         if(item.to || !item.href) return;
         this.$router.go(item.href);
+      },
+      async handleLogoutClick(){
+        let response = await axios.post({
+          url: '/logout'
+        });
+        this.$store.commit('setUsername', "");
+        this.firstMount();
+        await this.$router.push('/');
+      },
+      handleLoginClick(){
+        this.$router.push('/login');
+      },
+      firstMount(){
+        this.judge = this.$store.state.username;
+        console.log(this.judge);
       }
     },
   }

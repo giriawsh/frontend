@@ -136,9 +136,6 @@
       }
     },
     methods: {
-      jumpToEditor() {
-        this.$router.push('/login')
-      },
       async onPageChange(page) {
         this.page = page;
         await this.getData();
@@ -181,6 +178,10 @@
         }
         this.posts = posts;
       },
+      handlePostClick(id) {
+        console.log("click on" + id);
+        this.$router.push('/post/' + id);
+      }
     },
     watch: {
       options: {
