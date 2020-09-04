@@ -35,8 +35,7 @@ export default {
       ssr: false //仅在客户端渲染
     },
     {src: '~plugins/mavon-editor', ssr: false},
-    '@/plugins/ant-design-vue',
-    { src: '~/plugins/vuex-persistedstate', ssr: false },
+    '@/plugins/ant-design-vue'
   ],
   /*
   ** Nuxt.js dev-modules

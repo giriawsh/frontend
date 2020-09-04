@@ -8,7 +8,6 @@ export const plugins = [createPersistedState({
   storage: window.sessionStorage,
   reducer(val) {
     return {
-      // 只储存state中的assessmentData
       username: val.username,
       authority: val.authority
     }

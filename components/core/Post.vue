@@ -22,7 +22,9 @@
             align="center"
             justify="end"
           >
-            <v-icon class="mr-1">mdi-heart</v-icon>
+            <v-icon class="mr-1" @click="like" v-if="likeId===0">mdi-heart-outline</v-icon>
+
+            <v-icon class="mr-1" @click="deleteLike" v-if="likeId!==0">mdi-heart</v-icon>
             <span class="subheading mr-2">{{likeCount}}</span>
             <span class="mr-1">  </span>
             <v-icon class="mr-1">mdi-comment</v-icon>
@@ -109,21 +111,21 @@
         content: "",
         author: "",
         dateTime: "",
-        viewCount: "",
-        likeCount: "",
-        commentCount: "",
+        viewCount: 0,
+        likeCount: 0,
+        commentCount: 0,
         comments: [],
         submitting: false,
         value: '',
-        likes: 0,
+        likeId: 0,
         judgeAuth: this.judge(),
       }
     },
     async mounted() {
-      this.getComment();
+      this.init();
     },
     methods: {
-      async getComment() {
+      async init() {
         // console.log(this.$route.params.id);
         let url = "http://localhost:8091/api/posts/" + this.$route.params.id;
         let response = await axios({
@@ -202,6 +204,19 @@
         alert("successfully delete");
         await this.$router.push("/");
       },
+      async like(){
+        let response = await axios.post('/votes/', {
+          post: 'http://localhost:8091/api/posts/' + this.$route.params.id,
+          user: 'http://localhost:8091/api/users/' + this.$store.state.username
+        });
+        this.likeId = response.id;
+        this.likeCount++;
+      },
+      async deleteLike() {
+        let response = await axios.delete('/votes/' + this.likeId);
+        this.likeCount--;
+        this.likeId = 0;
+      }
     }
   }
 </script>
