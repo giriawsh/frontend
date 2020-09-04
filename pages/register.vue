@@ -1,5 +1,7 @@
 <template>
-  <v-container fluid>
+  <v-container 
+              class="for_register"
+              fluid>
     <v-row justify="center">
       <v-col
         cols="12"
@@ -111,4 +113,7 @@
 </script>
 <style>
   @import "../assets/public.css";
+  .for_register{
+                  width: 1000px;
+  }
 </style>

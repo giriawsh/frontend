@@ -19,6 +19,26 @@
                 用户信息
               </v-card-title>
             <v-card-text>
+              <br/>
+              <v-layout row>
+                <v-flex >
+                  ————————————————————账户信息————————————————————
+                </v-flex>
+              </v-layout>
+              <br/>
+
+              <v-layout row>
+                <v-flex xs2>
+                  <v-subheader>头像:</v-subheader>
+                </v-flex>
+                <v-flex xs8>
+                 <img :src="require('@/assets/photo.jpg')"
+        
+                      height="120"
+                      width="120"
+                      max-width="120"/>
+                </v-flex>
+              </v-layout>
               <v-layout row>
                 <v-flex xs2>
                   <v-subheader>UserName:</v-subheader>
@@ -37,6 +57,14 @@
                   </span>
                 </v-flex>
               </v-layout>
+
+              <br/>
+              <v-layout row>
+                <v-flex >
+                  ————————————————————已发布帖子————————————————————
+                </v-flex>
+              </v-layout>
+              <br/>
               <v-flex>
                 <v-btn
                   @click="jumpBack"
