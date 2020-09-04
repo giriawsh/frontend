@@ -2,7 +2,8 @@
   <v-card>
     <v-card-text>
 
-      <div class="text-center">
+      <div class="text-center"
+            style="width:1200px;">
         <v-list two-line>
           <v-list-item-group
             :page.sync="page"
@@ -13,41 +14,69 @@
                 @click="handlePostClick(post.id)"
               >
                 <template>
+                  <table  style="width:1200px;
+                                 margin:auto;
+                                 margin-left:4px;">
                   <v-list-item-content>
-                    <v-list-item-title v-text="post.title"/>
-                    <v-list-item-subtitle v-text="'作者：'+post.publisher">
-                    </v-list-item-subtitle>
-                    <span class="grey--text text--darken-1">
-                      <v-icon small>mdi-comment</v-icon>
-                      <small v-text="post.commentCount"/>
-                    </span>
-                    <span
-                      class="grey--text text--darken-1 mx-3"
-                    >
-                     <v-icon small>mdi-cards-heart</v-icon>
-                      <small v-text="post.likeCount"/>
-                    </span>
-                    <span
-                      class="grey--text text--darken-1"
-                    >
-                    <v-icon small>mdi-eye</v-icon>
-                      <small v-text="post.viewCount"/>
-                    </span>
-                    <span>
-                      <v-chip
-                        label
-                        color="pink"
-                        text-color="white"
-                      >
-                      <v-icon left>mdi-label</v-icon>
-                      {{post.topic}}
-                    </v-chip>
-                    </span>
-                  </v-list-item-content>
-                  <v-list-item-action>
-                    <v-list-item-action-text v-text="'发表于 '+post.dateTime">
-                    </v-list-item-action-text>
-                  </v-list-item-action>
+                    <table style="text-align:left;
+                                  font-size:30px;
+                                  font-weight:bold;">
+                      <th>
+                        <v-list-item-title v-text="post.title"
+                                            style="font-size:20px;
+                                                   font-weight:bolder;"/>
+                      </th>
+                    </table>
+                    <br/>
+                    <br/>
+                    <table>
+                      <tr style="text-align:left;
+                                  font-size:15px;
+                                  font-weight:bold;">
+                        <v-list-item-subtitle v-text="'作者：'+post.publisher">
+                        </v-list-item-subtitle>
+                      </tr>
+                      <tr>
+                        <td style="text-align:left;">
+                          <span>
+                            <v-chip
+                                    label
+                                    color="pink"
+                                    text-color="white"
+                                    style="width:75px;
+                                            font-size:12px;
+                                            height:20px;">
+                              <v-icon left>mdi-label</v-icon>
+                              {{post.topic}}
+                            </v-chip>
+                          </span>
+                        </td>
+                        <td style="text-align:right;
+                                    width:1000px;">
+                          <span class="grey--text text--darken-1">
+                            <v-icon small>mdi-comment</v-icon>
+                            <small v-text="post.commentCount"/>
+                          </span>
+                          <span class="grey--text text--darken-1 mx-3">
+                            <v-icon small>mdi-cards-heart</v-icon>
+                            <small v-text="post.likeCount"/>
+                          </span>
+                          <span class="grey--text text--darken-1">
+                            <v-icon small>mdi-eye</v-icon>
+                            <small v-text="post.viewCount"/>
+                          </span>
+                        </td>
+                        <td style="width:200px;
+                                  text-align:right;">         
+                          <v-list-item-action>
+                          <v-list-item-action-text v-text="'发表于 '+post.dateTime">
+                          </v-list-item-action-text>
+                          </v-list-item-action>
+                        </td>
+                      </tr>
+                    </table>
+                   </v-list-item-content>
+                  </table>
                 </template>
               </v-list-item>
               <v-divider>
