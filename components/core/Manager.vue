@@ -126,13 +126,6 @@
             <v-icon
               small
               class="mr-2"
-              @click="editTopic(item)"
-            >
-              mdi-pencil
-            </v-icon>
-            <v-icon
-              small
-              class="mr-2"
               @click="deleteTopic(item)"
             >
               mdi-delete
@@ -203,8 +196,7 @@
           authority: "",
         },
         defaultTopicItem: {
-          username: "",
-          authority: "",
+          topic: "",
         },
         editedIndex: -1,
         topicEditedIndex: -1,
@@ -289,11 +281,6 @@
       async saveTopic() {
         console.log("this.topicEditedIndex="+this.topicEditedIndex);
         if (this.topicEditedIndex >= 0) {
-          let response = await axios.patch(`/topics/${this.topic[this.topicEditedIndex].topic}`, {
-            title: this.editedTopic,
-          });
-          this.topic[this.topicEditedIndex].topic = this.editedTopic;
-          this.editedTopic = "";
         } else if(this.topicEditedIndex === -1) {
           this.editedTopicItem = Object.assign({}, item);
           let response = await axios.post('/topics', {
