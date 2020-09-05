@@ -5,13 +5,15 @@
   >
     <name-card v-bind="item"/>
     <div class="py-3"/>
-    <v-card style="height: 90px;">
+    <v-card style="height: 130px;">
+      <br/>
       <v-btn
         color="success"
         class="ma-1 white-text"
         @click="jumpToEditor"
       >
-        <v-icon dark>mdi-plus</v-icon>
+        <v-icon dark
+                style="width:24px">mdi-plus</v-icon>
         Create Article
       </v-btn>
       <v-btn
@@ -20,7 +22,8 @@
         @click="jumpToManage"
         v-if="judgeAuth === 'admin'"
       >
-        <v-icon dark>mdi-account-box-multiple</v-icon>
+        <v-icon dark
+                style="width:30px">mdi-account-box-multiple</v-icon>
         Manage Users
       </v-btn>
     </v-card>
@@ -72,7 +75,7 @@
         </div>
       </v-card-text>
     </v-card>
-    <div class="py-3"/>
+    <!-- <div class="py-3"/>
     <v-card style="height: 400px;">
       <v-card-title class="grey darken-3" style="color: white;">
         妹想好写啥
@@ -80,7 +83,7 @@
       <v-card-text>
         2
       </v-card-text>
-    </v-card>
+    </v-card> -->
     <!--<div class="py-3"/>
     <v-card style="height: 400px;">
       <v-card-title class="grey darken-3" style="color: white;">

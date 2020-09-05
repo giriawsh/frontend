@@ -7,6 +7,8 @@
       <v-card-title class="grey darken-4" style="color: white;" v-text="title">
       </v-card-title>
       <v-card-text>
+        <br/>
+        <br/>
         <h1>
           管理用户
         </h1>
@@ -14,17 +16,18 @@
           :headers="data.headers"
           :items="user"
           class="elevation-1"
+          
         >
 
           <template v-slot:top>
             <v-dialog v-if="dialog" max-width="500px">
               <template v-slot:activator="{on, attrs}">
-                <v-card>
+                <v-card >
                   <v-card-title>
                     <span class="headline">编辑用户权限</span>
                   </v-card-title>
                   <v-card-text>
-                    <v-container>
+                    <v-container  style="min-height:120px;" >
                       <v-row>
                         <v-col cols="12" sm="12">
                           <!--                            <v-text-field v-model="editedIndex.authority" >-->
@@ -64,7 +67,8 @@
       </v-card-text>
       <v-spacer>
       </v-spacer>
-      <v-card-text>
+      <br/>
+      <v-card-text  >
         <h1>
           管理板块
         </h1>
@@ -82,7 +86,7 @@
                     <span class="headline">编辑用户权限</span>
                   </v-card-title>
                   <v-card-text>
-                    <v-container>
+                    <v-container style="min-height:120px;">
                       <v-row>
                         <v-col cols="12" sm="12">
                           <!--                            <v-text-field v-model="editedIndex.authority" >-->
