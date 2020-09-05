@@ -11,7 +11,7 @@
           <the-breadcrumb layout-class="pl-3 pb-0"/>
           <div class="py-3"/>
           <v-content>
-            <v-card>
+            <v-card style="max-width: 1200px;">
               <v-card-title class="grey darken-3" style="color: white;">
                 用户信息
               </v-card-title>
@@ -41,7 +41,7 @@
                   <v-flex xs2>
                     <v-subheader>UserName:</v-subheader>
                   </v-flex>
-                  <v-flex xs8>
+                  <v-flex xs8 style="margin-top: 15px">
                     <span>{{user.username}}</span>
                   </v-flex>
                 </v-layout>
