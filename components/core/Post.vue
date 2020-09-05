@@ -18,7 +18,47 @@
             <v-icon left>mdi-label</v-icon>
             {{topic}}
           </v-chip>
-          <a>变更板块</a>
+          <div>
+
+              <v-dialog v-model="editDialog" max-width="500px">
+                <v-card>
+                  <v-card-title>
+                    <span class="headline">板块变更</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="12" sm="12">
+                          <v-select
+                            :items="selectItems"
+                            label="Change Topic"
+                            outlined
+                            v-model="selectTopic"
+                          >
+                          </v-select>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer>
+                    </v-spacer>
+                    <v-btn color="blue darken-1" text @click="handleCancel">Cancel</v-btn>
+                    <v-btn color="blue darken-1" text @click="changeTopic">Save</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            <template>
+              <v-btn
+                text
+                color="info"
+                @click="editDialog = true"
+              >
+                变更板块
+                <v-icon right>mdi-pencil</v-icon>
+              </v-btn>
+            </template>
+          </div>
           <v-row
             align="center"
             justify="end"
@@ -120,7 +160,9 @@
         value: '',
         likeId: 0,
         judgeAuth: this.judge(),
-        selectItems: []
+        selectItems: [],
+        editDialog: false,
+        selectTopic: "",
       }
     },
     async mounted() {
@@ -216,7 +258,7 @@
         alert("successfully delete");
         await this.$router.push("/");
       },
-      async like(){
+      async like() {
         let response = await axios.post('/votes/', {
           post: 'http://localhost:8091/api/posts/' + this.$route.params.id,
           user: 'http://localhost:8091/api/users/' + this.$store.state.username
@@ -229,11 +271,16 @@
         this.likeCount--;
         this.likeId = 0;
       },
-      changeTopic() {
-        axios.patch({
-          url: "/posts/" + this.$route.params.id,
-          topic: 'http://localhost:8091/api/topics/' + this.topic
+      async changeTopic() {
+        let response = await axios.patch("/posts/" + this.$route.params.id, {
+          topic: 'http://localhost:8091/api/topics/' + this.selectTopic
         });
+        this.editDialog = false;
+        this.topic = this.selectTopic;
+      },
+      handleCancel(){
+        this.editDialog = false;
+        this.selectTopic = "";
       }
     }
   }
