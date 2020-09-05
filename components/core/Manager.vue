@@ -308,14 +308,14 @@
       },
       async deleteTopic(item){
         const index = this.topic.indexOf(item);
-        if(confirm('Are you sure you want to delete this item?')){
+        if(confirm('确定要删除这个板块吗?')){
           let response = await axios.delete(`/topics/${this.topic[index]['topic']}`);
           this.topic.splice(index, 1);
         }
       },
       async deleteUser(item){
         const index = this.user.indexOf(item);
-        if(confirm('Are you sure you want to delete this user?')){
+        if(confirm('确定要删除这个用户吗?')){
           let response = await axios.delete(`/users/${this.user[index].username}`);
           this.user.splice(index, 1);
         }

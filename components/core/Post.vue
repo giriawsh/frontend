@@ -265,8 +265,11 @@
       // },
       async deletePost() {
         let response = await axios.delete("/posts/" + this.$route.params.id);
-        alert("successfully delete");
-        await this.$router.push("/");
+        if(confirm('确定要删除本帖吗？'))
+        {
+          alert("successfully delete");
+          await this.$router.push("/");
+        }
       },
       async like() {
         let response = await axios.post('/votes/', {
@@ -298,6 +301,6 @@
     }
   }
 </script>
-<style>
-
+<style scoped>
+  @import "../../assets/public.css";
 </style>

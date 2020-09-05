@@ -2,10 +2,7 @@
   <v-container class="for_profile"
                fluid
   >
-    <div style="
-              width:1000px;
-              position:absolute;
-              top:-20px">
+    <div>
       <v-row justify="center">
         <v-col
           cols="12"
@@ -58,7 +55,7 @@
                 <br/>
                 <table>
                   <div class="text-center"
-                       style="width:800px">
+                       >
                     <v-list two-line>
                       <v-list-item-group
                         :page.sync="page"
@@ -69,7 +66,7 @@
                             @click="handlePostClick(post.id)"
                           >
                             <template >
-                              <table style="width:800px;
+                              <table style="
                                 margin:auto;
                                 margin-left:4px;">
                                 <v-list-item-content>
