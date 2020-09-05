@@ -113,8 +113,9 @@
         judgeAuth: "",
       }
     },
-    created() {
+    mounted() {
       this.judgeAuth = this.$store.state.authority;
+      console.log("judge="+this.judgeAuth);
     },
     components: {
       NameCard,

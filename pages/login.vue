@@ -31,7 +31,7 @@
                     v-model="form.password"
                     prepend-icon="mdi-lock"
                     :type="showPwd ? 'text' : 'password'"
-                    :append-icon ="showPwd ? 'mdi-eye-off' : 'mdi-eye'"
+                    :append-icon="showPwd ? 'mdi-eye-off' : 'mdi-eye'"
                     required
                     label="密码"
                     :rules="[v=>!!v || '请输入密码']"
@@ -106,16 +106,17 @@
           }
         });
         let authResponse = await axios({
-          url: '/users/'+this.form.username+'/authorities',
+          url: '/users/' + this.form.username + '/authorities',
           method: 'get',
         });
+
         // console.log(authResponse);
         // console.log("???");
         // console.log(this.$store.state.authority);
         if (this.isLoginSuccess(response)) {
           this.$store.commit('setUsername', this.form.username);
           this.$store.commit('setAuthority', authResponse['_embedded']['authorities'][0]['authority']);
-          console.log(this.$store.state.authority);
+
           // console.log(this.$store.state.username);
           this.$router.push('/');
         } else {

@@ -7,18 +7,21 @@
       <v-card-title class="grey darken-4" style="color: white;" v-text="title">
       </v-card-title>
       <v-card-text>
-        <h1>
-          管理用户
-        </h1>
         <v-data-table
           :headers="data.headers"
           :items="user"
           class="elevation-1"
         >
-
           <template v-slot:top>
-            <v-dialog v-if="dialog" max-width="500px">
-              <template v-slot:activator="{on, attrs}">
+            <v-toolbar flat color="white">
+              <v-toolbar-title>Manage Users</v-toolbar-title>
+              <v-divider
+                class="mx-4"
+                inset
+                vertical
+              ></v-divider>
+              <v-spacer></v-spacer>
+              <v-dialog v-model="dialog" max-width="500px">
                 <v-card>
                   <v-card-title>
                     <span class="headline">编辑用户权限</span>
@@ -47,9 +50,8 @@
                     <v-btn color="blue darken-1" text @click="save">Save</v-btn>
                   </v-card-actions>
                 </v-card>
-              </template>
-
-            </v-dialog>
+              </v-dialog>
+            </v-toolbar>
           </template>
           <template v-slot:item.actions="{item}">
             <v-icon
@@ -65,35 +67,40 @@
       <v-spacer>
       </v-spacer>
       <v-card-text>
-        <h1>
-          管理板块
-        </h1>
         <v-data-table
-          :headers="data.headers"
-          :items="user"
+          :headers="data.topic"
+          :items="topic"
           class="elevation-1"
         >
-
           <template v-slot:top>
-            <v-dialog v-if="dialog" max-width="500px">
-              <template v-slot:activator="{on, attrs}">
+            <v-toolbar flat color="white">
+              <v-toolbar-title>Manage Users</v-toolbar-title>
+              <v-divider
+                class="mx-4"
+                inset
+                vertical
+              ></v-divider>
+              <v-spacer></v-spacer>
+              <v-dialog v-model="dialogTopic" max-width="500px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="primary"
+                    dark
+                    class="mb-2"
+                    v-bind="attrs"
+                    v-on="on"
+                  >New Item</v-btn>
+                </template>
                 <v-card>
                   <v-card-title>
-                    <span class="headline">编辑用户权限</span>
+                    <span class="headline">{{ formTitle }}</span>
                   </v-card-title>
                   <v-card-text>
                     <v-container>
                       <v-row>
                         <v-col cols="12" sm="12">
-                          <!--                            <v-text-field v-model="editedIndex.authority" >-->
-                          <!--                            </v-text-field>-->
-                          <v-select
-                            :items="selectItems"
-                            label="Authority"
-                            outlined
-                            v-model="selectAuth"
-                          >
-                          </v-select>
+                          <v-text-field v-model="editedTopic">
+                          </v-text-field>
                         </v-col>
                       </v-row>
                     </v-container>
@@ -101,19 +108,18 @@
                   <v-card-actions>
                     <v-spacer>
                     </v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                    <v-btn color="blue darken-1" text @click="closeTopic">Cancel</v-btn>
+                    <v-btn color="blue darken-1" text @click="saveTopic">Save</v-btn>
                   </v-card-actions>
                 </v-card>
-              </template>
-
-            </v-dialog>
+              </v-dialog>
+            </v-toolbar>
           </template>
           <template v-slot:item.actions="{item}">
             <v-icon
               small
               class="mr-2"
-              @click="editItem(item)"
+              @click="editTopic(item)"
             >
               mdi-pencil
             </v-icon>
@@ -121,7 +127,6 @@
         </v-data-table>
       </v-card-text>
     </v-card>
-
   </v-col>
 </template>
 <script>
@@ -133,11 +138,13 @@
       return {
         title: "管理员界面",
         user: [],
+        topic: [],
         selectItems: [
           'admin',
           'user'
         ],
         selectAuth: "",
+        editedTopic: "",
         data: {
           selected: [],
           headers: [
@@ -156,36 +163,75 @@
               value: "actions",
               sortable: false
             }
-          ]
+          ],
+          topic: [
+            {
+              text: "TopicName",
+              value: "topic",
+              sortable: false
+            },
+            {
+              text: "Action",
+              value: "actions",
+              sortable: false
+            }
+          ],
         },
         editedItem: {
           username: "",
           authority: "",
         },
+        editedTopicItem: {
+          topic: ""
+        },
         defaultItem: {
           username: "",
           authority: "",
         },
+        defaultTopicItem: {
+          username: "",
+          authority: "",
+        },
         editedIndex: -1,
+        topicEditedIndex: -1,
         dialog: false,
+        dialogTopic: false,
       }
     },
-    async mounted() {
-      let response = await axios.get('/users');
-      let length = response['_embedded']['users'].length;
-      for (let i = 0; i < length; i++) {
-        let name = response['_embedded']['users'][i]['username'];
-        // console.log("name="+name);
-        let authHref = await axios.get(response['_embedded']['users'][i]['_links']['authorities']['href']);
-        let authority = authHref['_embedded']['authorities'][0]['authority'];
-        // console.log("auth="+authority);
-        this.user.push({
-          username: name,
-          authority: authority
-        })
+    mounted() {
+      this.init();
+    },
+    computed: {
+      formTitle() {
+        return this.topicEditedIndex === -1 ? 'New Item' : 'Edit Item'
       }
     },
     methods: {
+      async init() {
+        let response = await axios.get('/users');
+        let length = response['_embedded']['users'].length;
+        for (let i = 0; i < length; i++) {
+          let name = response['_embedded']['users'][i]['username'];
+          // console.log("name="+name);
+          let authHref = await axios.get(response['_embedded']['users'][i]['_links']['authorities']['href']);
+          let authority = authHref['_embedded']['authorities'][0]['authority'];
+          // console.log("auth="+authority);
+          this.user.push({
+            username: name,
+            authority: authority
+          })
+        }
+        let topics = await axios({
+          url: '/topics',
+          method: 'get',
+        });
+        let len = topics['_embedded']['topics'].length;
+        let topicArray = [];
+        for (let i = 0; i < len; i++) {
+          topicArray.push({ topic: topics['_embedded']['topics'][i]['title']});
+        }
+        this.topic = topicArray;
+      },
       editItem(item) {
         this.editedIndex = this.user.indexOf(item);
         this.editedItem = Object.assign({}, item);
@@ -193,11 +239,23 @@
         console.log(this.editedItem);
         this.dialog = true;
       },
+      editTopic(item) {
+        this.topicEditedIndex = this.topic.indexOf(item);
+        this.editedTopicItem = Object.assign({}, item);
+        this.dialogTopic = true;
+      },
       close() {
         this.dialog = false;
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem);
           this.editedIndex = -1;
+        })
+      },
+      closeTopic() {
+        this.dialogTopic = false;
+        this.$nextTick(() => {
+          this.editedTopicItem = Object.assign({}, this.defaultTopicItem);
+          this.editedTopicIndex = -1;
         })
       },
       async save() {
@@ -208,6 +266,15 @@
             authorities: authArray,
           });
           this.selectAuth = "";
+        } else {
+          alert("error");
+        }
+        this.close();
+      },
+      async saveTopic() {
+        if (this.editedTopicIndex > -1) {
+          this.topic[this.editedTopicIndex].topic = this.editedTopic;
+          this.editedTopic = "";
         } else {
           alert("error");
         }

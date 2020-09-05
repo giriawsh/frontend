@@ -9,7 +9,7 @@ export const plugins = [createPersistedState({
   reducer(val) {
     return {
       username: val.username,
-      authority: val.authority
+      authority: val.authority,
     }
   }
 })];
@@ -27,6 +27,7 @@ export const state = () => ({
   ],
   username: '',
   authority: '',
+  topics: [],
 });
 export const getters = {
   links: (state, getters) => {
@@ -38,5 +39,7 @@ export const mutations = {
   toggleDrawer: state => (state.drawer = !state.drawer),
   setUsername: (state, value) => state.username = value,
   setAuthority: (state, value) => state.authority = value,
+  pushTopics: (state, value) => state.topics.push(value),
+  setTopics: (state, value) => state.topics= value,
 };
 
