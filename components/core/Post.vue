@@ -12,12 +12,13 @@
         <v-list-item class="grow">
           <v-chip
             label
-            color="blue"
+            color="pink"
             text-color="white"
           >
             <v-icon left>mdi-label</v-icon>
             {{topic}}
           </v-chip>
+          <a>变更板块</a>
           <v-row
             align="center"
             justify="end"
@@ -119,6 +120,7 @@
         value: '',
         likeId: 0,
         judgeAuth: this.judge(),
+        selectItems: []
       }
     },
     async mounted() {
@@ -126,12 +128,17 @@
     },
     methods: {
       async init() {
-        // console.log(this.$route.params.id);
         let url = "http://localhost:8091/api/posts/" + this.$route.params.id;
+        let topicsPromise = await axios({
+          url: 'http://localhost:8091/api/topics/',
+          method: 'get'
+        });
         let response = await axios({
           url: url,
           method: 'get',
         });
+        let topics = await topicsPromise;
+        this.selectItems = topics['_embedded'].topics.map(topic => topic.title);
         this.title = response.title;
         this.content = response.content;
         var d = new Date(response.dateTime);
@@ -221,6 +228,12 @@
         let response = await axios.delete('/votes/' + this.likeId);
         this.likeCount--;
         this.likeId = 0;
+      },
+      changeTopic() {
+        axios.patch({
+          url: "/posts/" + this.$route.params.id,
+          topic: 'http://localhost:8091/api/topics/' + this.topic
+        });
       }
     }
   }

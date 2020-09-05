@@ -99,7 +99,7 @@
                     <v-container>
                       <v-row>
                         <v-col cols="12" sm="12">
-                          <v-text-field v-model="editedTopic">
+                          <v-text-field v-model="editedTopic" label="input topic name" outlined>
                           </v-text-field>
                         </v-col>
                       </v-row>
@@ -241,6 +241,7 @@
       },
       editTopic(item) {
         this.topicEditedIndex = this.topic.indexOf(item);
+        console.log("this.topic.indexOf(item)="+this.topic.indexOf(item));
         this.editedTopicItem = Object.assign({}, item);
         this.dialogTopic = true;
       },
@@ -255,7 +256,7 @@
         this.dialogTopic = false;
         this.$nextTick(() => {
           this.editedTopicItem = Object.assign({}, this.defaultTopicItem);
-          this.editedTopicIndex = -1;
+          this.topicEditedIndex = -1;
         })
       },
       async save() {
@@ -272,13 +273,19 @@
         this.close();
       },
       async saveTopic() {
-        if (this.editedTopicIndex > -1) {
-          this.topic[this.editedTopicIndex].topic = this.editedTopic;
+        console.log("this.topicEditedIndex="+this.topicEditedIndex);
+        if (this.topicEditedIndex >= 0) {
+          let response = await axios.patch(`/topics/${this.topic[this.topicEditedIndex].topic}`, {
+            title: this.editedTopic,
+          });
+          this.topic[this.topicEditedIndex].topic = this.editedTopic;
           this.editedTopic = "";
-        } else {
-          alert("error");
+        } else if(this.topicEditedIndex === -1) {
+
+        }else{
+          alert("error!");
         }
-        this.close();
+        this.dialogTopic = false;
       }
     },
 
