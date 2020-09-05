@@ -74,7 +74,7 @@
         >
           <template v-slot:top>
             <v-toolbar flat color="white">
-              <v-toolbar-title>Manage Users</v-toolbar-title>
+              <v-toolbar-title>Manage Topic</v-toolbar-title>
               <v-divider
                 class="mx-4"
                 inset
@@ -281,7 +281,13 @@
           this.topic[this.topicEditedIndex].topic = this.editedTopic;
           this.editedTopic = "";
         } else if(this.topicEditedIndex === -1) {
-
+          this.editedTopicItem = Object.assign({}, item);
+          let response = await axios.post('/topics', {
+            title: this.editedTopic,
+          });
+          console.log("!!!");
+          console.log(this.editedTopicItem);
+          this.topic.push(this.editedTopicItem);
         }else{
           alert("error!");
         }
