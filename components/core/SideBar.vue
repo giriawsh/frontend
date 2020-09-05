@@ -5,7 +5,7 @@
   >
     <name-card v-bind="item"/>
     <div class="py-3"/>
-    <v-card style="height: 130px;">
+    <v-card style="height:130px;">
       <br/>
       <v-btn
         color="success"
@@ -27,12 +27,13 @@
         Manage Users
       </v-btn>
     </v-card>
+
     <div class="py-3"/>
     <v-card style="height: 400px;">
       <v-card-title class="grey darken-3" style="color: white;">
         了解更多
-      </v-card-title>
-      <v-card-text>
+      </v-card-title>      
+      <v-card-text>      
         <div href="https://www.runoob.com/"
              style="font-size:18px; ">
           <br/>
@@ -75,30 +76,35 @@
         </div>
       </v-card-text>
     </v-card>
-    <!-- <div class="py-3"/>
-    <v-card style="height: 400px;">
+
+    <!-- 增加返回顶部组件 -->
+    
+    
+    <div class="py-3"/>
+    <v-card style="height: 140px;">
       <v-card-title class="grey darken-3" style="color: white;">
-        妹想好写啥
-      </v-card-title>
-      <v-card-text>
-        2
-      </v-card-text>
-    </v-card> -->
-    <!--<div class="py-3"/>
-    <v-card style="height: 400px;">
-      <v-card-title class="grey darken-3" style="color: white;">
-        标题3
-      </v-card-title>
-      <v-card-text>
-        3
-      </v-card-text>
-    </v-card> -->
+        关于我们
+      </v-card-title>       
+        <v-card-text>
+          <table style="font-size:18px">
+          <br/>
+            <tr>
+              <a href="https://docs.qq.com/doc/DSUdxS0hSVllXaktl?groupUin=9Q9g6KM5ja18PJ44LZrqCA%253D%253D&ADUIN=1105000185&ADSESSION=1599264250&ADTAG=CLIENT.QQ.5761_.0&ADPUBNO=27041&jumpuin=1105000185"
+                 style="color:black;">面向用户设计</a>
+            </tr>
+          </table>
+        </v-card-text>
+
+    </v-card> 
+    <div class="content-container-top">
+        <ScrollTop></ScrollTop>
+        </div>
   </v-col>
 </template>
 <script>
   import NameCard from "../widget/NameCard";
   import axios from "~/plugins/axios";
-
+  import ScrollTop from '../AppToTop';
   export default {
     name: 'CoreSideBar',
     data() {
@@ -121,6 +127,7 @@
     },
     components: {
       NameCard,
+      ScrollTop
     },
     methods: {
       jumpToEditor() {

@@ -159,16 +159,22 @@
         </v-col>
       </v-row>
     </div>
+    <div class="content-container-top">
+        <ScrollTop></ScrollTop>
+        </div>
   </v-container>
+  
 </template>
 <script>
   import axios from "~/plugins/axios";
   import TheBreadcrumb from "../components/TheBreadcrumb";
+  import ScrollTop from '../components/AppToTop';
   export default {
     props: ['foobar'],
     middleware: 'auth',
     components:{
-      TheBreadcrumb
+      TheBreadcrumb,
+      ScrollTop
     },
     data() {
       return {
