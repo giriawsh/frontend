@@ -20,34 +20,34 @@
           </v-chip>
           <div>
 
-              <v-dialog v-model="editDialog" max-width="500px">
-                <v-card>
-                  <v-card-title>
-                    <span class="headline">板块变更</span>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-col cols="12" sm="12">
-                          <v-select
-                            :items="selectItems"
-                            label="Change Topic"
-                            outlined
-                            v-model="selectTopic"
-                          >
-                          </v-select>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer>
-                    </v-spacer>
-                    <v-btn color="blue darken-1" text @click="handleCancel">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="changeTopic">Save</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+            <v-dialog v-model="editDialog" max-width="500px">
+              <v-card>
+                <v-card-title>
+                  <span class="headline">板块变更</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12" sm="12">
+                        <v-select
+                          :items="selectItems"
+                          label="Change Topic"
+                          outlined
+                          v-model="selectTopic"
+                        >
+                        </v-select>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer>
+                  </v-spacer>
+                  <v-btn color="blue darken-1" text @click="handleCancel">Cancel</v-btn>
+                  <v-btn color="blue darken-1" text @click="changeTopic">Save</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
             <template>
               <v-btn
                 text
@@ -55,7 +55,6 @@
                 @click="editDialog = true"
               >
                 变更板块
-                <v-icon right>mdi-pencil</v-icon>
               </v-btn>
             </template>
           </div>
@@ -75,6 +74,7 @@
             <span class="subheading mr-2">{{viewCount}}</span>
             <span class="subheading mr-2" v-if="judgeAuth === true">
               <v-icon class="mr-1" @click="deletePost">mdi-delete</v-icon>
+              <v-icon @click="jumpToPostEditor">mdi-pencil</v-icon>
             </span>
           </v-row>
         </v-list-item>
@@ -159,65 +159,67 @@
         submitting: false,
         value: '',
         likeId: 0,
-        judgeAuth: this.judge(),
         selectItems: [],
         editDialog: false,
         selectTopic: "",
+        judgeAuth: false
       }
     },
     async mounted() {
-      this.init();
+      let url = "http://localhost:8091/api/posts/" + this.$route.params.id;
+      let topicsPromise = await axios({
+        url: 'http://localhost:8091/api/topics/',
+        method: 'get'
+      });
+      let response = await axios({
+        url: url,
+        method: 'get',
+      });
+      let topics = await topicsPromise;
+      this.selectItems = topics['_embedded'].topics.map(topic => topic.title);
+      this.title = response.title;
+      this.content = response.content;
+      var d = new Date(response.dateTime);
+      this.dateTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
+      this.author = response.publisher.username;
+      console.log("response.publisher.username="+response.publisher.username);
+      this.viewCount = response.viewCount;
+      this.commentCount = response.commentCount;
+      this.likeCount = response.votesCount;
+      this.topic = response.topic.title;
+      for (let v of response.votes) {
+        if (v.user.username === this.$store.state.username) {
+          this.likeId = v.id;
+        }
+      }
+
+      if (this.$store.state.authority === 'admin') {
+        this.judgeAuth = true;
+      } else this.judgeAuth =  (this.$store.state.username === response.publisher.username);
+
+      let commentResponse = await axios({
+        url: '/posts/' + this.$route.params.id + '/comments',
+        method: 'get',
+      });
+      let commentLen = commentResponse['_embedded']['comments'].length;
+      var comments = [];
+      for (let i = 0; i < commentLen; i++) {
+        let commenterHref = await axios.get(commentResponse['_embedded']['comments'][i]['_links']['commenter']['href']) || "";
+        console.log(commenterHref);
+        let commenter = commenterHref['username'] || "匿名用户";
+        console.log("commenter=" + commenter);
+        comments.push({
+          id: commentResponse['_embedded']['comments'][i].id,
+          author: commenter,
+          content: commentResponse['_embedded']['comments'][i]['content'],
+          dateTime: commentResponse['_embedded']['comments'][i]['dateTime'],
+          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+          auth: this.$store.state.authority === 'admin' ? true : this.$store.state.username === commenter
+        })
+      }
+      this.comments = comments;
     },
     methods: {
-      async init() {
-        let url = "http://localhost:8091/api/posts/" + this.$route.params.id;
-        let topicsPromise = await axios({
-          url: 'http://localhost:8091/api/topics/',
-          method: 'get'
-        });
-        let response = await axios({
-          url: url,
-          method: 'get',
-        });
-        let topics = await topicsPromise;
-        this.selectItems = topics['_embedded'].topics.map(topic => topic.title);
-        this.title = response.title;
-        this.content = response.content;
-        var d = new Date(response.dateTime);
-        this.dateTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
-        this.author = response.publisher.username;
-        this.viewCount = response.viewCount;
-        this.commentCount = response.commentCount;
-        this.likeCount = response.votesCount;
-        this.topic = response.topic.title;
-        for (let v of response.votes) {
-          if (v.user.username === this.$store.state.username) {
-            this.likeId = v.id;
-          }
-        }
-
-        let commentResponse = await axios({
-          url: '/posts/' + this.$route.params.id + '/comments',
-          method: 'get',
-        });
-        let commentLen = commentResponse['_embedded']['comments'].length;
-        var comments = [];
-        for (let i = 0; i < commentLen; i++) {
-          let commenterHref = await axios.get(commentResponse['_embedded']['comments'][i]['_links']['commenter']['href']) || "";
-          console.log(commenterHref);
-          let commenter = commenterHref['username'] || "匿名用户";
-          console.log("commenter=" + commenter);
-          comments.push({
-            id: commentResponse['_embedded']['comments'][i].id,
-            author: commenter,
-            content: commentResponse['_embedded']['comments'][i]['content'],
-            dateTime: commentResponse['_embedded']['comments'][i]['dateTime'],
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            auth: this.$store.state.authority === 'admin' ? true : this.$store.state.username === commenter
-          })
-        }
-        this.comments = comments;
-      },
       async handleCommentSubmit() {
         if (!this.value) {
           return;
@@ -248,11 +250,19 @@
       handleCommentChange(e) {
         this.value = e.target.value;
       },
-      judge() {
-        if (this.$store.state.authority === 'admin') {
-          return true;
-        } else return this.$store.state.username === this.author;
-      },
+      // async judge() {
+      //   let url = "http://localhost:8091/api/posts/" + this.$route.params.id;
+      //   let response = await axios({
+      //     url: url,
+      //     method: 'get',
+      //   });
+      //   console.log("this.$store.state.authority="+this.$store.state.authority);
+      //   console.log("this.$store.state.username="+this.$store.state.username);
+      //   console.log("response.publisher.username="+response.publisher.username);
+      //   if (this.$store.state.authority === 'admin') {
+      //     this.judge = true;
+      //   } else this.judge =  (this.$store.state.username === response.publisher.username);
+      // },
       async deletePost() {
         let response = await axios.delete("/posts/" + this.$route.params.id);
         alert("successfully delete");
@@ -278,10 +288,13 @@
         this.editDialog = false;
         this.topic = this.selectTopic;
       },
-      handleCancel(){
+      handleCancel() {
         this.editDialog = false;
         this.selectTopic = "";
       },
+      jumpToPostEditor(){
+        this.$router.push('/editor/'+this.$route.params.id);
+      }
     }
   }
 </script>

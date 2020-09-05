@@ -57,9 +57,16 @@
             <v-icon
               small
               class="mr-2"
-              @click="editItem(item)"
+              @click="editUser(item)"
             >
               mdi-pencil
+            </v-icon>
+            <v-icon
+              small
+              class="mr-2"
+              @click="deleteUser(item)"
+            >
+              mdi-delete
             </v-icon>
           </template>
         </v-data-table>
@@ -89,7 +96,7 @@
                     class="mb-2"
                     v-bind="attrs"
                     v-on="on"
-                  >New Item</v-btn>
+                  >New Topic</v-btn>
                 </template>
                 <v-card>
                   <v-card-title>
@@ -239,7 +246,7 @@
         }
         this.topic = topicArray;
       },
-      editItem(item) {
+      editUser(item) {
         this.editedIndex = this.user.indexOf(item);
         this.editedItem = Object.assign({}, item);
         console.log("index=" + this.editedIndex);
@@ -304,6 +311,13 @@
         if(confirm('Are you sure you want to delete this item?')){
           let response = await axios.delete(`/topics/${this.topic[index]['topic']}`);
           this.topic.splice(index, 1);
+        }
+      },
+      async deleteUser(item){
+        const index = this.user.indexOf(item);
+        if(confirm('Are you sure you want to delete this user?')){
+          let response = await axios.delete(`/users/${this.user[index].username}`);
+          this.user.splice(index, 1);
         }
       }
     },

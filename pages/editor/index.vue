@@ -34,7 +34,7 @@
                 <v-flex>
                   <v-select
                     v-model="type"
-                    :items="types"
+                    :items="topics"
                     :rules="[v=>!!v || '请选择板块']"
                     required
                     style="z-index: 1500"
@@ -48,13 +48,6 @@
                             :ishljs="true" @change="updateDoc" @save="saveDoc"/>
             </v-container>
             <v-flex>
-              <v-btn
-                large
-                color="blue-grey"
-                width="100px"
-              >
-                保存
-              </v-btn>
               <v-btn
                 :loading="postLoading"
                 @click="postDoc"
@@ -73,7 +66,7 @@
   </v-container>
 </template>
 <script>
-  import TheBreadcrumb from "../components/TheBreadcrumb";
+  import TheBreadcrumb from "../../components/TheBreadcrumb";
   import axios from "~/plugins/axios";
 
   export default {
@@ -85,10 +78,7 @@
         type: '',
         alertDialog: false,
         isValid: false,
-        types: [
-          '求职',
-          '校园生活',
-          '情感天地',
+        topics: [
         ],
         postLoading: false,
         items: [
@@ -138,21 +128,34 @@
           preview: true, // 预览
         },
         post: {
-          content: "### TEST",
+          content: "",
           html: "",
-        }
+        },
       }
+    },
+    async mounted(){
+      const topics = await axios({
+        method: 'get',
+        url: '/topics'
+      });
+      let tempTopics = [];
+      for (let t of topics["_embedded"].topics) {
+        tempTopics.push(t.title)
+      }
+      this.topics = tempTopics;
     },
     methods: {
       updateDoc(markdown, render) {
         // console.log("markdownupdate=" + markdown);
         // console.log("htmlupdate=" + render);
         this.html = render;
+        this.markdown = markdown;
       },
       saveDoc(markdown, render) {
         // console.log("markdownsave=" + markdown);
         // console.log("htmlsave=" + render);
         this.html = render;
+        this.markdown = markdown;
       },
       async postDoc() {
         var author = "http://localhost:8091/api/users/" + this.$store.state.username;
@@ -165,6 +168,7 @@
             content: this.html,
             publisher: author,
             topic: topic,
+            markdown: this.markdown
           }
         );
         console.log(response);
@@ -177,5 +181,5 @@
   }
 </script>
 <style>
-  @import "../assets/public.css";
+  @import "assets/public.css";
 </style>

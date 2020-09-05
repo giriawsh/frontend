@@ -114,6 +114,7 @@
           url: '/logout'
         });
         this.$store.commit('setUsername', "");
+        this.$store.commit('setAuthority', "");
         this.firstMount();
         await this.$router.push('/');
       },

@@ -12,16 +12,6 @@
       <v-tab v-for="tab of tabs" :key="tab.id" :to="tab.to" ripple>
         {{tab.name}}
       </v-tab>
-      <!--    如果想要保存tabs切换的效果-->
-      <!--      <v-tab-item id="/articles">-->
-      <!--        <router-view v-if="active === '/articles'" />-->
-      <!--      </v-tab-item>-->
-      <!--      <v-tab-item id="/essence">-->
-      <!--        <router-view v-if="active === '/essence'" />-->
-      <!--      </v-tab-item>-->
-      <!--      <v-tab-item id="/school">-->
-      <!--        <router-view v-if="active === '/school'" />-->
-      <!--      </v-tab-item>-->
     </v-tabs>
     <router-view :key="key"/>
   </v-col>
