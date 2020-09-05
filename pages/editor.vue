@@ -145,13 +145,13 @@
     },
     methods: {
       updateDoc(markdown, render) {
-        console.log("markdownupdate=" + markdown);
-        console.log("htmlupdate=" + render);
+        // console.log("markdownupdate=" + markdown);
+        // console.log("htmlupdate=" + render);
         this.html = render;
       },
       saveDoc(markdown, render) {
-        console.log("markdownsave=" + markdown);
-        console.log("htmlsave=" + render);
+        // console.log("markdownsave=" + markdown);
+        // console.log("htmlsave=" + render);
         this.html = render;
       },
       async postDoc() {

@@ -2,8 +2,7 @@
   <v-card>
     <v-card-text>
 
-      <div class="text-center"
-           style="width:1200px;">
+      <div class="text-center">
         <v-list two-line>
           <v-list-item-group
             :page.sync="page"
@@ -14,9 +13,7 @@
                 @click="handlePostClick(post.id)"
               >
                 <template>
-                  <table  style="width:1200px;
-                                 margin:auto;
-                                 margin-left:4px;">
+                  <table>
                     <v-list-item-content>
                       <table style="text-align:left;
                                   font-size:30px;
