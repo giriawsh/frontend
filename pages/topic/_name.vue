@@ -1,8 +1,7 @@
 <template>
   <v-card>
     <v-card-text>
-      <div class="text-center"
-            style="width:1200px">
+      <div class="text-center">
         <v-list two-line>
           <v-list-item-group
             :page.sync="page"
@@ -11,14 +10,12 @@
               <v-list-item
                 :key="index"
                 @click="handlePostClick(post.id)"
-              >            
-                <template >  
-                  <table style="width:1200px;
-                                margin:auto;
-                                margin-left:4px;">                
+              >
+                <template >
+                  <table style="margin:auto;
+                                margin-left:4px;">
                   <v-list-item-content>
-                    <table style="
-                                  text-align:left;
+                    <table style="text-align:left;
                                   font-size:30px;
                                   font-wight:bold;">
                       <th>
@@ -28,7 +25,7 @@
                       </th>
                     </table>
                     <br/>
-                    <br/>                
+                    <br/>
                     <table>
                       <tr style="text-align:left;
                                   font-size:15px;
@@ -43,9 +40,7 @@
                                     label
                                     color="pink"
                                     text-color="white"
-                                    style="width:75px;
-                                            font-size:12px;
-                                            height:20px;">
+                                    >
                               <v-icon left>mdi-label</v-icon>
                               {{post.topic}}
                             </v-chip>
@@ -71,12 +66,12 @@
                           <v-list-item-action>
                           <v-list-item-action-text v-text="'发表于 '+post.dateTime">
                           </v-list-item-action-text>
-                          </v-list-item-action>  
+                          </v-list-item-action>
                         </td>
-                      </tr>                     
+                      </tr>
                     </table>
                    </v-list-item-content>
-                  </table>           
+                  </table>
                 </template>
               </v-list-item>
               <v-divider>

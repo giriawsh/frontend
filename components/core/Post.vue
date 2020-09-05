@@ -141,6 +141,11 @@
         this.commentCount = response.commentCount;
         this.likeCount = response.votesCount;
         this.topic = response.topic.title;
+        for (let v of response.votes) {
+          if (v.user.username === this.$store.state.username) {
+            this.likeId = v.id;
+          }
+        }
 
         let commentResponse = await axios({
           url: '/posts/' + this.$route.params.id + '/comments',

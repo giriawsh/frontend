@@ -40,9 +40,7 @@
                               label
                               color="pink"
                               text-color="white"
-                              style="width:75px;
-                                            font-size:12px;
-                                            height:20px;">
+                              >
                               <v-icon left>mdi-label</v-icon>
                               {{post.topic}}
                             </v-chip>

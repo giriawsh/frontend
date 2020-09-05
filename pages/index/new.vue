@@ -43,9 +43,7 @@
                                     label
                                     color="pink"
                                     text-color="white"
-                                    style="width:75px;
-                                            font-size:12px;
-                                            height:20px;">
+                                    >
                               <v-icon left>mdi-label</v-icon>
                               {{post.topic}}
                             </v-chip>
@@ -67,7 +65,7 @@
                           </span>
                         </td>
                         <td style="width:200px;
-                                  text-align:right;">         
+                                  text-align:right;">
                           <v-list-item-action>
                           <v-list-item-action-text v-text="'发表于 '+post.dateTime">
                           </v-list-item-action-text>
