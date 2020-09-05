@@ -281,7 +281,7 @@
       handleCancel(){
         this.editDialog = false;
         this.selectTopic = "";
-      }
+      },
     }
   }
 </script>

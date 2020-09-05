@@ -123,6 +123,13 @@
             >
               mdi-pencil
             </v-icon>
+            <v-icon
+              small
+              class="mr-2"
+              @click="deleteTopic(item)"
+            >
+              mdi-delete
+            </v-icon>
           </template>
         </v-data-table>
       </v-card-text>
@@ -285,13 +292,19 @@
           let response = await axios.post('/topics', {
             title: this.editedTopic,
           });
-          console.log("!!!");
-          console.log(this.editedTopicItem);
+          console.log("this.editedTopicItem:", this.editedTopicItem);
           this.topic.push(this.editedTopicItem);
         }else{
           alert("error!");
         }
         this.dialogTopic = false;
+      },
+      async deleteTopic(item){
+        const index = this.topic.indexOf(item);
+        if(confirm('Are you sure you want to delete this item?')){
+          let response = await axios.delete(`/topics/${this.topic[index]['topic']}`);
+          this.topic.splice(index, 1);
+        }
       }
     },
 
