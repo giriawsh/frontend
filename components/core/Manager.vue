@@ -205,6 +205,11 @@
       }
     },
     mounted() {
+      if(this.$store.state.authority !== 'admin')
+      {
+        alert("no permission!");
+        this.$router.push("/");
+      }
       this.init();
     },
     computed: {
