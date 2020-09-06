@@ -91,7 +91,7 @@
               <a slot="author">{{item.author}}</a>
               <a-avatar
                 slot="avatar"
-                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                src="https://cdn.vuetifyjs.com/images/john.jpg"
                 alt="User"
               />
               <p slot="content">
@@ -117,7 +117,7 @@
         <a-comment>
           <a-avatar
             slot="avatar"
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+            src="https://cdn.vuetifyjs.com/images/john.jpg"
             alt="匿名用户"
           >
           </a-avatar>
@@ -212,7 +212,7 @@
           author: commenter,
           content: commentResponse['_embedded']['comments'][i]['content'],
           dateTime: commentResponse['_embedded']['comments'][i]['dateTime'],
-          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+          avatar: 'https://cdn.vuetifyjs.com/images/john.jpg',
           auth: this.$store.state.authority === 'admin' ? true : this.$store.state.username === commenter
         })
       }
@@ -241,7 +241,7 @@
           author: this.$store.state.username,
           content: this.value,
           dateTime: response.dateTime,
-          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+          avatar: 'https://cdn.vuetifyjs.com/images/john.jpg',
           auth: true,
         });
         this.value = '';

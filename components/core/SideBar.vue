@@ -111,8 +111,8 @@
       return {
         item:
           {
-            jobTitle: "Web Developer",
-            name: "Jim J",
+            jobTitle: "Authority:"+this.$store.state.authority,
+            name: this.$store.state.username,
             color: "teal",
             avatar: {
               src: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
