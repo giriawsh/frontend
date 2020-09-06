@@ -26,7 +26,7 @@
         <v-icon dark
                 style="width:30px">mdi-account-box-multiple
         </v-icon>
-        Manage Users
+        Manage Panel
       </v-btn>
     </v-card>
 
