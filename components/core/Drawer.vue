@@ -11,8 +11,8 @@
         >
           <div class="text-center">
             <div class="brand" >
-              <h1 style="color: #d5d5d5 !important;">北邮作业版论坛</h1>
-              <h3 style="color: #d5d5d5 !important;">Let's take a look</h3>
+              <h1 style="color: #d5d5d5 !important;">北邮迷你版论坛</h1>
+              <h3 style="color: #d5d5d5 !important;">BYR BBS Mini</h3>
             </div>
           </div>
         </v-col>
