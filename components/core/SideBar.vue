@@ -115,8 +115,7 @@
             name: "Jim J",
             color: "teal",
             avatar: {
-              src: "https://randomuser.me/api/portraits/men/10.jpg",
-              size: "36"
+              src: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
             }
           },
         judgeAuth: "",

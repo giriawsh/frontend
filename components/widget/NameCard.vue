@@ -7,7 +7,10 @@
             :size="96"
             color="primary"
           >
-
+            <img
+              src="https://cdn.vuetifyjs.com/images/john.jpg"
+              alt="John"
+            >
           </v-avatar>
           <div class="flex">
             <div class="subheading">
@@ -29,10 +32,6 @@
       name: {
         type: String,
         default: ""
-      },
-      avatar: {
-        type: Object,
-        default: null
       },
       jobTitle: {
         type: String,

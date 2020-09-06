@@ -106,6 +106,7 @@
                   <a-icon
                     type="delete"
                     color="#1976d2"
+                    @click="deleteComment(item)"
                   >
                   </a-icon>
                 </a>
@@ -241,25 +242,13 @@
           content: this.value,
           dateTime: response.dateTime,
           avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+          auth: true,
         });
         this.value = '';
       },
       handleCommentChange(e) {
         this.value = e.target.value;
       },
-      // async judge() {
-      //   let url = "http://localhost:8091/api/posts/" + this.$route.params.id;
-      //   let response = await axios({
-      //     url: url,
-      //     method: 'get',
-      //   });
-      //   console.log("this.$store.state.authority="+this.$store.state.authority);
-      //   console.log("this.$store.state.username="+this.$store.state.username);
-      //   console.log("response.publisher.username="+response.publisher.username);
-      //   if (this.$store.state.authority === 'admin') {
-      //     this.judge = true;
-      //   } else this.judge =  (this.$store.state.username === response.publisher.username);
-      // },
       async deletePost() {
         let response = await axios.delete("/posts/" + this.$route.params.id);
         if(confirm('确定要删除本帖吗？'))
@@ -294,6 +283,20 @@
       },
       jumpToPostEditor(){
         this.$router.push('/editor/'+this.$route.params.id);
+      },
+      async deleteComment(item){
+        console.log(item);
+        let response = await axios.delete('/comments/'+item.id);
+        let spliceArray = [];
+        let k = 0;
+        for(let i = 0; i < this.comments.length; i++)
+        {
+          if(this.comments[i].id !== item.id)
+          {
+            spliceArray[k++] = this.comments[i];
+          }
+        }
+        this.comments = spliceArray;
       }
     }
   }
