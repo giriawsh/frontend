@@ -283,7 +283,9 @@
       async saveTopic() {
         if (this.topicEditedIndex >= 0) {
         } else if(this.topicEditedIndex === -1) {
-          this.editedTopicItem = Object.assign({}, item);
+          this.editedTopicItem = {
+            topic: this.editedTopic
+          };
           let response = await axios.post('/topics', {
             title: this.editedTopic,
           });
