@@ -53,7 +53,7 @@
                   </v-flex>
                 </v-layout>
                 <br/>
-                <table>
+                <table style="min-width: 800px;">
                   <div class="text-center"
                        >
                     <v-list two-line>
