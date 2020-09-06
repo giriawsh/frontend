@@ -25,6 +25,7 @@
     name: 'CoreDrawer',
     data() {
       return {
+
       }
     }
   }
