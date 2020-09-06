@@ -183,7 +183,6 @@
       var d = new Date(response.dateTime);
       this.dateTime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
       this.author = response.publisher.username;
-      console.log("response.publisher.username="+response.publisher.username);
       this.viewCount = response.viewCount;
       this.commentCount = response.commentCount;
       this.likeCount = response.votesCount;
@@ -206,9 +205,7 @@
       var comments = [];
       for (let i = 0; i < commentLen; i++) {
         let commenterHref = await axios.get(commentResponse['_embedded']['comments'][i]['_links']['commenter']['href']) || "";
-        console.log(commenterHref);
         let commenter = commenterHref['username'] || "匿名用户";
-        console.log("commenter=" + commenter);
         comments.push({
           id: commentResponse['_embedded']['comments'][i].id,
           author: commenter,
@@ -231,7 +228,6 @@
         this.submitting = true;
         // let date = new Date();
         // let dateTime = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-        console.log(this.$store.state.username);
         let response = await axios.post('/comments',
           {
             commenter: "http://localhost:8091/api/users/" + this.$store.state.username,

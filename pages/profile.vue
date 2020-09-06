@@ -250,7 +250,6 @@
             url: tempPost[i]['_links']['self']['href'],
             method: 'get'
           });
-          console.log("topic = " + Author['topic']['title']);
           this.posts.push({
             id: tempPost[i]['id'],
             title: tempPost[i]['title'],
@@ -265,7 +264,6 @@
         // console.log(this.posts);
       },
       handlePostClick(id) {
-        console.log("click on" + id);
         this.$router.push('/post/' + id);
       }
     },
@@ -273,7 +271,6 @@
       options: {
         handler() {
           this.getData();
-          console.log("page=" + this.page);
         }
       },
       deep: true

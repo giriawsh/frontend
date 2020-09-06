@@ -44,8 +44,6 @@
       CoreManager
     },
     mounted() {
-      console.log(this.$route);
-      console.log(this.$route.params.id);
     }
   }
 </script>

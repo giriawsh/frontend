@@ -241,13 +241,10 @@
       editUser(item) {
         this.editedIndex = this.user.indexOf(item);
         this.editedItem = Object.assign({}, item);
-        console.log("index=" + this.editedIndex);
-        console.log(this.editedItem);
         this.dialog = true;
       },
       editTopic(item) {
         this.topicEditedIndex = this.topic.indexOf(item);
-        console.log("this.topic.indexOf(item)="+this.topic.indexOf(item));
         this.editedTopicItem = Object.assign({}, item);
         this.dialogTopic = true;
       },
@@ -279,14 +276,12 @@
         this.close();
       },
       async saveTopic() {
-        console.log("this.topicEditedIndex="+this.topicEditedIndex);
         if (this.topicEditedIndex >= 0) {
         } else if(this.topicEditedIndex === -1) {
           this.editedTopicItem = Object.assign({}, item);
           let response = await axios.post('/topics', {
             title: this.editedTopic,
           });
-          console.log("this.editedTopicItem:", this.editedTopicItem);
           this.topic.push(this.editedTopicItem);
         }else{
           alert("error!");

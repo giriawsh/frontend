@@ -119,7 +119,7 @@
       },
       firstMount(){
         this.judge = this.$store.state.username;
-        console.log(this.judge);
+        // console.log(this.judge);
       }
     },
   }

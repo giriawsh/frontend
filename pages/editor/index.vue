@@ -159,7 +159,6 @@
       },
       async postDoc() {
         var author = "http://localhost:8091/api/users/" + this.$store.state.username;
-        console.log("author=" + author);
         var topic = "http://localhost:8091/api/topics/" + this.type;
         let response = await axios.post(
           '/posts',

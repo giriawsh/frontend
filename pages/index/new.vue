@@ -207,7 +207,6 @@
         this.posts = posts;
       },
       handlePostClick(id) {
-        console.log("click on" + id);
         this.$router.push('/post/' + id);
       }
     },
