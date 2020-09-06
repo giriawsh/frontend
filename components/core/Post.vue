@@ -53,6 +53,7 @@
                 text
                 color="info"
                 @click="editDialog = true"
+                v-if="judgeAuth === true"
               >
                 变更板块
               </v-btn>

@@ -31,10 +31,6 @@
         solo-inverted
         style="max-width: 200px;"
       />
-      <v-btn icon
-            style="right:2px">
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
       <v-menu
         offset-y
       >
