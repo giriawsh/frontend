@@ -6,7 +6,9 @@
     <v-card justify="start" align="start">
       <v-card-title class="grey darken-4" style="color: white;" v-text="title">
       </v-card-title>
-      <v-card-text v-html="content" class="markdown-body">
+      <v-card-text v-html="content" style="word-wrap:break-word;
+word-break:break-all;
+overflow: hidden;" class="markdown-body">
       </v-card-text>
       <v-card-actions>
         <v-list-item class="grow">

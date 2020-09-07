@@ -10,7 +10,7 @@
       >
         <the-breadcrumb layout-class="pl-3 pb-0"/>
         <template>
-          <v-main>
+          <v-main style="width: 1600px;">
             <v-form v-model="isValid">
               <v-layout row>
                 <v-flex>
@@ -44,7 +44,8 @@
               </v-layout>
             </v-form>
             <v-container fluid>
-              <mavon-editor :toolbars="markdownOption" v-model="post.content" style="width: 100%; height: 800px;"
+              <mavon-editor :toolbars="markdownOption" v-model="post.content"
+                            style="width: 100%; height: 800px; max-width: 100%;"
                             :ishljs="true" @change="updateDoc" @save="saveDoc"/>
             </v-container>
             <v-flex>
@@ -78,8 +79,7 @@
         type: '',
         alertDialog: false,
         isValid: false,
-        topics: [
-        ],
+        topics: [],
         postLoading: false,
         items: [
           {
@@ -128,12 +128,12 @@
           preview: true, // 预览
         },
         post: {
-          content: "",
+          content: "# test",
           html: "",
         }
       }
     },
-    async mounted(){
+    async mounted() {
       let url = "http://localhost:8091/api/posts/" + this.$route.params.id;
       let response = await axios({
         url: url,
@@ -143,7 +143,7 @@
       if (this.$store.state.authority === 'admin') {
         flag = true;
       } else flag = (this.$store.state.username === response.publisher.username);
-      if(!flag){
+      if (!flag) {
         alert("您不是本贴的作者，不可进行编辑!");
         this.$router.push('/');
       }
@@ -160,30 +160,34 @@
       this.title = response.title;
       this.type = response.topic.title;
       this.post.content = response.markdown;
+      this.post.html = response.content;
     },
     methods: {
       updateDoc(markdown, render) {
         // console.log("markdownupdate=" + markdown);
         // console.log("htmlupdate=" + render);
         this.html = render;
+        this.markdown = markdown;
       },
       saveDoc(markdown, render) {
         // console.log("markdownsave=" + markdown);
         // console.log("htmlsave=" + render);
         this.html = render;
+        this.markdown = markdown;
       },
       async postDoc() {
-        var author = "http://localhost:8091/api/users/" + this.$store.state.username;
         var topic = "http://localhost:8091/api/topics/" + this.type;
-        let response = await axios.post(
-          '/posts',
+        let response = await axios.patch(
+          `/posts/${this.$route.params.id}`,
           {
             title: this.title,
             content: this.html,
-            publisher: author,
             topic: topic,
+            markdown: this.markdown
           }
         );
+        console.log("!!!");
+        console.log(response);
         this.$router.push('/post/' + response.id);
       },
     },

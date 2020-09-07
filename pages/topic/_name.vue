@@ -80,15 +80,15 @@
 
           </v-list-item-group>
         </v-list>
-        <!--        <v-data-table-->
-        <!--          :headers="headers"-->
-        <!--          :items="posts"-->
-        <!--          :page.sync="page"-->
-        <!--          :items-per-page="itemsPerPage"-->
-        <!--          hide-default-footer-->
-        <!--          class="elevation-1"-->
-        <!--        >-->
-        <!--        </v-data-table>-->
+<!--                <v-data-table-->
+<!--                  :headers="headers"-->
+<!--                  :items="posts"-->
+<!--                  :page.sync="page"-->
+<!--                  :items-per-page="itemsPerPage"-->
+<!--                  hide-default-footer-->
+<!--                  class="elevation-1"-->
+<!--                >-->
+<!--                </v-data-table>-->
         <v-pagination
           v-model="page"
           :length="pageLength"

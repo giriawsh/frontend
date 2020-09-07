@@ -10,7 +10,7 @@
       >
         <the-breadcrumb layout-class="pl-3 pb-0"/>
         <template>
-          <v-main>
+          <v-main style="width: 1600px;">
             <v-form v-model="isValid">
               <v-layout row>
                 <v-flex>
@@ -44,8 +44,10 @@
               </v-layout>
             </v-form>
             <v-container fluid>
-              <mavon-editor :toolbars="markdownOption" v-model="post.content" style="width: 100%; height: 800px;"
-                            :ishljs="true" @change="updateDoc" @save="saveDoc"/>
+              <no-ssr>
+                <mavon-editor :toolbars="markdownOption" v-model="post.content" style="width: 100%; height: 800px;  max-width: 100%;"
+                              :ishljs="true" @change="updateDoc" @save="saveDoc"/>
+              </no-ssr>
             </v-container>
             <v-flex>
               <v-btn
@@ -78,8 +80,7 @@
         type: '',
         alertDialog: false,
         isValid: false,
-        topics: [
-        ],
+        topics: [],
         postLoading: false,
         items: [
           {
@@ -133,7 +134,7 @@
         },
       }
     },
-    async mounted(){
+    async mounted() {
       const topics = await axios({
         method: 'get',
         url: '/topics'

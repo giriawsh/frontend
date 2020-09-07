@@ -269,7 +269,7 @@
       },
       async save() {
         if (this.editedIndex > -1) {
-          this.user[this.editedIndex].authority = this.selectAuth;
+          this.user[this. editedIndex].authority = this.selectAuth;
           let authArray = ['http://localhost:8091/api/authorities/' + this.selectAuth];
           let response = await axios.patch(`/users/${this.user[this.editedIndex].username}`, {
             authorities: authArray,
