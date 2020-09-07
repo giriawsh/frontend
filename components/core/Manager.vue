@@ -96,7 +96,8 @@
                     class="mb-2"
                     v-bind="attrs"
                     v-on="on"
-                  >New Topic</v-btn>
+                  >New Topic
+                  </v-btn>
                 </template>
                 <v-card>
                   <v-card-title>
@@ -137,179 +138,187 @@
   </v-col>
 </template>
 <script>
-  import axios from "~/plugins/axios";
+    import axios from "~/plugins/axios";
 
-  export default {
-    name: 'CoreManager',
-    data() {
-      return {
-        title: "管理员界面",
-        user: [],
-        topic: [],
-        selectItems: [
-          'admin',
-          'user'
-        ],
-        selectAuth: "",
-        editedTopic: "",
-        data: {
-          selected: [],
-          headers: [
-            {
-              text: "Username",
-              value: "username",
-              sortable: false
-            },
-            {
-              text: "Authority",
-              value: "authority",
-              sortable: false
-            },
-            {
-              text: "Action",
-              value: "actions",
-              sortable: false
+    export default {
+        name: 'CoreManager',
+        data() {
+            return {
+                title: "管理员界面",
+                user: [],
+                topic: [],
+                selectItems: [
+                    'admin',
+                    'user'
+                ],
+                selectAuth: "",
+                editedTopic: "",
+                data: {
+                    selected: [],
+                    headers: [
+                        {
+                            text: "Username",
+                            value: "username",
+                            sortable: false
+                        },
+                        {
+                            text: "Authority",
+                            value: "authority",
+                            sortable: false
+                        },
+                        {
+                            text: "Action",
+                            value: "actions",
+                            sortable: false
+                        }
+                    ],
+                    topic: [
+                        {
+                            text: "TopicName",
+                            value: "topic",
+                            sortable: false
+                        },
+                        {
+                            text: "Action",
+                            value: "actions",
+                            sortable: false
+                        }
+                    ],
+                },
+                editedItem: {
+                    username: "",
+                    authority: "",
+                },
+                editedTopicItem: {
+                    topic: ""
+                },
+                defaultItem: {
+                    username: "",
+                    authority: "",
+                },
+                defaultTopicItem: {
+                    topic: "",
+                },
+                editedIndex: -1,
+                topicEditedIndex: -1,
+                dialog: false,
+                dialogTopic: false,
             }
-          ],
-          topic: [
-            {
-              text: "TopicName",
-              value: "topic",
-              sortable: false
-            },
-            {
-              text: "Action",
-              value: "actions",
-              sortable: false
+        },
+        mounted() {
+            if (this.$store.state.authority !== 'admin') {
+                alert("no permission!");
+                this.$router.push("/");
             }
-          ],
+            this.init();
         },
-        editedItem: {
-          username: "",
-          authority: "",
+        computed: {
+            formTitle() {
+                return this.topicEditedIndex === -1 ? 'New Item' : 'Edit Item'
+            }
         },
-        editedTopicItem: {
-          topic: ""
-        },
-        defaultItem: {
-          username: "",
-          authority: "",
-        },
-        defaultTopicItem: {
-          topic: "",
-        },
-        editedIndex: -1,
-        topicEditedIndex: -1,
-        dialog: false,
-        dialogTopic: false,
-      }
-    },
-    mounted() {
-      if(this.$store.state.authority !== 'admin')
-      {
-        alert("no permission!");
-        this.$router.push("/");
-      }
-      this.init();
-    },
-    computed: {
-      formTitle() {
-        return this.topicEditedIndex === -1 ? 'New Item' : 'Edit Item'
-      }
-    },
-    methods: {
-      async init() {
-        let response = await axios.get('/users');
-        let length = response['_embedded']['users'].length;
-        for (let i = 0; i < length; i++) {
-          let name = response['_embedded']['users'][i]['username'];
-          // console.log("name="+name);
-          let authHref = await axios.get(response['_embedded']['users'][i]['_links']['authorities']['href']);
-          let authority = authHref['_embedded']['authorities'][0]['authority'];
-          // console.log("auth="+authority);
-          this.user.push({
-            username: name,
-            authority: authority
-          })
-        }
-        let topics = await axios({
-          url: '/topics',
-          method: 'get',
-        });
-        let len = topics['_embedded']['topics'].length;
-        let topicArray = [];
-        for (let i = 0; i < len; i++) {
-          topicArray.push({ topic: topics['_embedded']['topics'][i]['title']});
-        }
-        this.topic = topicArray;
-      },
-      editUser(item) {
-        this.editedIndex = this.user.indexOf(item);
-        this.editedItem = Object.assign({}, item);
-        this.dialog = true;
-      },
-      editTopic(item) {
-        this.topicEditedIndex = this.topic.indexOf(item);
-        this.editedTopicItem = Object.assign({}, item);
-        this.dialogTopic = true;
-      },
-      close() {
-        this.dialog = false;
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem);
-          this.editedIndex = -1;
-        })
-      },
-      closeTopic() {
-        this.dialogTopic = false;
-        this.$nextTick(() => {
-          this.editedTopicItem = Object.assign({}, this.defaultTopicItem);
-          this.topicEditedIndex = -1;
-        })
-      },
-      async save() {
-        if (this.editedIndex > -1) {
-          this.user[this. editedIndex].authority = this.selectAuth;
-          let authArray = ['http://localhost:8091/api/authorities/' + this.selectAuth];
-          let response = await axios.patch(`/users/${this.user[this.editedIndex].username}`, {
-            authorities: authArray,
-          });
-          this.selectAuth = "";
-        } else {
-          alert("error");
-        }
-        this.close();
-      },
-      async saveTopic() {
-        if (this.topicEditedIndex >= 0) {
-        } else if(this.topicEditedIndex === -1) {
-          this.editedTopicItem = {
-            topic: this.editedTopic
-          };
-          let response = await axios.post('/topics', {
-            title: this.editedTopic,
-          });
-          this.topic.push(this.editedTopicItem);
-        }else{
-          alert("error!");
-        }
-        this.dialogTopic = false;
-      },
-      async deleteTopic(item){
-        const index = this.topic.indexOf(item);
-        if(confirm('确定要删除这个板块吗?')){
-          let response = await axios.delete(`/topics/${this.topic[index]['topic']}`);
-          this.topic.splice(index, 1);
-        }
-      },
-      async deleteUser(item){
-        const index = this.user.indexOf(item);
-        if(confirm('确定要删除这个用户吗?')){
-          let response = await axios.delete(`/users/${this.user[index].username}`);
-          this.user.splice(index, 1);
-        }
-      }
-    },
+        methods: {
+            async init() {
+                let response = await axios.get('/users');
+                let length = response['_embedded']['users'].length;
+                for (let i = 0; i < length; i++) {
+                    let name = response['_embedded']['users'][i]['username'];
+                    // console.log("name="+name);
+                    let authHref = await axios.get(response['_embedded']['users'][i]['_links']['authorities']['href']);
+                    let authority = authHref['_embedded']['authorities'][0]['authority'];
+                    // console.log("auth="+authority);
+                    this.user.push({
+                        username: name,
+                        authority: authority
+                    })
+                }
+                let topics = await axios({
+                    url: '/topics',
+                    method: 'get',
+                });
+                let len = topics['_embedded']['topics'].length;
+                let topicArray = [];
+                for (let i = 0; i < len; i++) {
+                    topicArray.push({topic: topics['_embedded']['topics'][i]['title']});
+                }
+                this.topic = topicArray;
+            },
+            editUser(item) {
+                this.editedIndex = this.user.indexOf(item);
+                this.editedItem = Object.assign({}, item);
+                this.dialog = true;
+            },
+            editTopic(item) {
+                this.topicEditedIndex = this.topic.indexOf(item);
+                this.editedTopicItem = Object.assign({}, item);
+                this.dialogTopic = true;
+            },
+            close() {
+                this.dialog = false;
+                this.$nextTick(() => {
+                    this.editedItem = Object.assign({}, this.defaultItem);
+                    this.editedIndex = -1;
+                    this.selectAuth = "";
+                })
+            },
+            closeTopic() {
+                this.dialogTopic = false;
+                this.$nextTick(() => {
+                    this.editedTopicItem = Object.assign({}, this.defaultTopicItem);
+                    this.topicEditedIndex = -1;
+                    this.editedTopic = "";
+                })
+            },
+            async save() {
+                if (this.editedIndex > -1) {
+                    this.user[this.editedIndex].authority = this.selectAuth;
+                    let authArray = ['http://localhost:8091/api/authorities/' + this.selectAuth];
+                    let response = await axios.patch(`/users/${this.user[this.editedIndex].username}`, {
+                        authorities: authArray,
+                    });
 
-  }
+                    if ((this.user[this.editedIndex].username === this.$store.state.username) && this.selectAuth === 'user') {
+                        this.$store.state.authority = 'user';
+                        this.selectAuth = "";
+                        this.$router.push('/');
+                    }
+                    this.selectAuth = "";
+                } else {
+                    alert("error");
+                }
+                this.close();
+            },
+            async saveTopic() {
+                if (this.topicEditedIndex >= 0) {
+                } else if (this.topicEditedIndex === -1) {
+                    this.editedTopicItem = {
+                        topic: this.editedTopic
+                    };
+                    let response = await axios.post('/topics', {
+                        title: this.editedTopic,
+                    });
+                    this.topic.push(this.editedTopicItem);
+                } else {
+                    alert("error!");
+                }
+                this.dialogTopic = false;
+                this.editedTopic = "";
+            },
+            async deleteTopic(item) {
+                const index = this.topic.indexOf(item);
+                if (confirm('确定要删除这个板块吗?')) {
+                    let response = await axios.delete(`/topics/${this.topic[index]['topic']}`);
+                    this.topic.splice(index, 1);
+                }
+            },
+            async deleteUser(item) {
+                const index = this.user.indexOf(item);
+                if (confirm('确定要删除这个用户吗?')) {
+                    let response = await axios.delete(`/users/${this.user[index].username}`);
+                    this.user.splice(index, 1);
+                }
+            }
+        },
+
+    }
 </script>

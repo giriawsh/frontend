@@ -124,8 +124,8 @@
       return {
         item:
           {
-            jobTitle: "Authority:" + this.$store.state.authority,
-            name: this.$store.state.username,
+            jobTitle: "Authority:" + (this.$store.state.authority || "tourist"),
+            name: this.$store.state.username || "游客",
             color: "teal",
             avatar: {
               src: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
